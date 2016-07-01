@@ -3,7 +3,7 @@
 	<html>
 		<head>
 			<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-			<title>楼昀恺的主页</title>
+			<title>主页</title>
 			<style type="text/css">
 				*{
 					margin: 0px;
@@ -16,10 +16,6 @@
 					background: -o-linear-gradient(left,rgba(193,210,240,0),rgba(193,210,240,1));
 					background: -moz-linear-gradient(left,rgba(193,210,240,0),rgba(193,210,240,1));
 					background: linear-gradient(to left, rgba(193,210,240,0),rgba(193,210,240,1));
-				}
-
-				div{
-					border-style: outset;
 				}
 
 				ul { 
@@ -51,31 +47,6 @@
 				#menu-li{
 					float: left;
 					width: 33%;
-				}
-
-				.new{
-					margin: 0px;
-					padding: 0px;				
-				}
-
-				.title-newlog{
-					text-align: center;
-				}
-
-				.new_1{
-					margin-left: 250px;
-					padding-left: 50px;
-					margin-right: 250px;
-					padding-right: 50px;
-					border-right: 3px outset;
-					border-top: 3px outset;
-					border-left: 3px outset;
-					border-bottom: 3px outset;				
-					background:#eff7ff;
-				}
-
-				#newlog-list{
-					list-style: none;
 				}
 
 				.log{
@@ -149,12 +120,16 @@
 					background: #999;
 				}
 
+				.loglist{
+					text-align: center;
+				}
+
 			</style>
 		</head>	
 		<body>
 			<div class="intro">
 				<div class="intro_back">
-					<img src="headpic.jpg" style="width=100px">
+					<img src="headpic.jpg" onload="javascript: this.width = 100px;">
 				</div>
 				<div class="intro-name">
 					<ul>
@@ -165,7 +140,7 @@
 				</div>
 			</div>
 			<div class="bg" id="bg">	
-				<img src="bg.jpg" onload='this.width=screen.width;'>
+				<img src="bg.jpg" onload="javascript: this.width = screen.width;">
 				<!--<img style="position:absolute; top:8px;left:6px;z-index:2" src="headpic.jpg" height=200 width=260>-->
 				
 			</div>
@@ -206,17 +181,12 @@
 					</li>
 				</ul>
 			</div>
-			<div class="new">
-				<h2 class="title-newlog" id="style3">新日志</h2>
-				<ul id="newlog-list">
-					<li>
-						<div class="new_1">
-							<p id="style4">看法</p>
-							<p id="style5">&nbsp;&nbsp;讲道理我还没想好说什么</p>
-							<a id="style6" href="https://louyk14.github.io/homework1.html"><h6 id="style2"><br><br>查看详情--></a>
-						</div>
-					</li>
-				</ul>
+			<div class="loglist">
+				<h2>作业列表</h2>
+				<ul>
+					li><a href="https://louyk14.github.io"><h6 id="style2">第一次作业链接</h6></a></li>
+					<li><a id="style6" href="https://louyk14.github.io/"><br><br>返回主页</a></li>
+				</ul>	
 			</div>
 		</body>
 	</html>
