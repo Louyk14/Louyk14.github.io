@@ -51,21 +51,27 @@
 			document.onkeydown=function(event){
 				console.log("event", event);
 	            var e = event || window.event || arguments.callee.caller.arguments[0];
+	            var direction = camera.getWorldDirection();
+	            console.log(direction);
 	            if(e && e.keyCode==38)
 	            { // 上
-	                camera.position.z -= camera_step;
+	                camera.position.x += direction.x;
+	                camera.position.z += direction.z;
 	            }
 	            if(e && e.keyCode==40)
 	            { //下
-	                camera.position.z += camera_step;   
+	                camera.position.x -= direction.x;
+	                camera.position.z -= direction.z;   
 	            }            
 	            if(e && e.keyCode==37)
 	            { // 左
-	                camera.position.x-= camera_step;
+	                camera.position.x += direction.z;
+	                camera.position.z -= direction.x;
 	            }
 	            if(e && e.keyCode==39)
 	            { // 右
-	               camera.position.x += camera_step;
+	               camera.position.x -= direction.z;
+	                camera.position.z += direction.x;
 	            }
 	         };
 
