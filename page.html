@@ -23,13 +23,13 @@
 
 		//图片、材料设置
 			var grassmap = "grass.jpg";
-			var grassTexture = THREE.ImageUtils.loadTextureCube(grassmap);
+			var grassTexture = THREE.ImageUtils.loadTexture(grassmap);
 			var grassMatertial = new THREE.MeshBasicMaterial({map:grassTexture});
 
 		//天空盒设置
 			var skypic = "sky.jpg";
 			var skypics = [skypic, skypic, skypic, skypic, skypic, skypic];
-			var skyTextTure = THREE.ImageUtils.loadTexture(skypics);
+			var skyTextTure = THREE.ImageUtils.loadTextureCube(skypics);
 			var shader = THREE.ShaderLib["cube"];
 			shader.uniforms["tCube"].value = skyTextTure;
 			var skyboxMaterial = new THREE.ShaderMaterial({
