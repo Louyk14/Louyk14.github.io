@@ -27,7 +27,8 @@
 			var grassMatertial = new THREE.MeshBasicMaterial({map:grassTexture});
 
 		//天空盒设置
-			var skypics = ['sky.jpg', 'sky.jpg', 'sky.jpg', 'sky.jpg', 'sky.jpg', 'sky.jpg'];
+			var skypic = "sky.jpg";
+			var skypics = [skypic, skypic, skypic, skypic, skypic, skypic];
 			var skyTextTure = THREE.ImageUtils.loadTexture(skypics);
 			var shader = THREE.ShaderLib["cube"];
 			shader.uniforms["tCube"].value = skyTextTure;
