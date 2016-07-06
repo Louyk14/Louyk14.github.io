@@ -30,7 +30,7 @@
 			var skypic = "sky.jpg";
 			var skypics = [skypic, skypic, skypic, skypic, skypic, skypic];
 			var skyTextTure = THREE.ImageUtils.CubeTextureLoader(skypics);
-			skyTextTure.minFilter = THREE.LinearFilter;
+			//skyTextTure.minFilter = THREE.LinearFilter;
 			var shader = THREE.ShaderLib["cube"];
 			shader.uniforms["tCube"].value = skyTextTure;
 			var skyboxMaterial = new THREE.ShaderMaterial({
@@ -40,7 +40,7 @@
 				depthWrite: false,
 				side: THREE.BackSide
 			});
-			var skyboxGeom = new THREE.CubeGeometry(500, 500, 500);
+			var skyboxGeom = new THREE.BoxGeometry(500, 500, 500);
 			skybox = new THREE.Mesh(skyboxGeom, skyboxMaterial);
 			scene.add(skybox);
 
