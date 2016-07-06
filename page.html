@@ -29,7 +29,7 @@
 		//天空盒设置
 			var skypic = "sky.jpg";
 			var skypics = [skypic, skypic, skypic, skypic, skypic, skypic];
-			var skyTextTure = THREE.ImageUtils.loadTextureCube(skypics);
+			var skyTextTure = THREE.ImageUtils.CubeTextureLoader(skypics);
 			skyTextTure.minFilter = THREE.LinearFilter;
 			var shader = THREE.ShaderLib["cube"];
 			shader.uniforms["tCube"].value = skyTextTure;
@@ -37,9 +37,10 @@
 				uniforms: shader.uniforms,
 				fragmentShader: shader.fragmentShader,
 				vertexShader: shader.vertexShader,
-				depthWrite: false
+				depthWrite: false,
+				side: THREE.BackSide
 			});
-			var skyboxGeom = new THREE.CubeGeometry(mapsize, mapsize, mapsize);
+			var skyboxGeom = new THREE.CubeGeometry(500, 500, 500);
 			skybox = new THREE.Mesh(skyboxGeom, skyboxMaterial);
 			scene.add(skybox);
 
