@@ -29,7 +29,7 @@
 		//天空盒设置
 			var skypic = "sky.jpg";
 			var skypics = [skypic, skypic, skypic, skypic, skypic, skypic];
-			var skyTextTure = THREE.ImageUtils.CubeTextureLoader(skypics);
+			var skyTextTure = THREE.ImageUtils.loadTextureCube(skypics);
 			//skyTextTure.minFilter = THREE.LinearFilter;
 			var shader = THREE.ShaderLib["cube"];
 			shader.uniforms["tCube"].value = skyTextTure;
