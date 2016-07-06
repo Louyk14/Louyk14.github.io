@@ -1,0 +1,136 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+		<title>My first Three.js app</title>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body id="wf">
+		<script src="js/three.js"></script>
+		<script>
+		var scene = new THREE.Scene();
+		var cubeCamera = new THREE.CubeCamera( 1, 100000, 128 );
+		var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+		scene.add(cubeCamera);
+
+		//一些常量
+			var mapsize = 20;
+			var cube_side_length = 1;
+			var cubes = [];
+			var camera_step = 0.5;
+
+		//图片、材料设置
+			var grassmap = "grass.jpg";
+			var grassTexture = THREE.ImageUtils.loadTexture(grassmap);
+			var grassMatertial = new THREE.MeshBasicMaterial({map:grassTexture});
+
+		//天空盒设置
+			var skypics = ['sky.jpg', 'sky.jpg', 'sky.jpg', 'sky.jpg', 'sky.jpg', 'sky.jpg'];
+			var skyTextTure = THREE.ImageUtils.loadTexture(skypics);
+			var shader = THREE.ShaderLib["cube"];
+			shader.uniforms["tCube"].value = skyTextTure;
+			var skyboxMaterial = new THREE.ShaderMaterial({
+				uniforms: shader.uniforms,
+				fragmentShader: shader.fragmentShader,
+				vertexShader: shader.vertexShader,
+				depthWrite: false
+			});
+			var skyboxGeom = new THREE.CubeGeometry(mapsize, mapsize, mapsize);
+			skybox = new THREE.Mesh(skyboxGeom, skyboxMaterial);
+			scene.add(skybox);
+
+			var renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild(renderer.domElement);
+			
+			document.onkeydown=function(event){
+				console.log("event", event);
+	            var e = event || window.event || arguments.callee.caller.arguments[0];
+	            if(e && e.keyCode==38)
+	            { // 上
+	                camera.position.z -= camera_step;
+	            }
+	            if(e && e.keyCode==40)
+	            { //下
+	                camera.position.z += camera_step;   
+	            }            
+	            if(e && e.keyCode==37)
+	            { // 左
+	                camera.position.x-= camera_step;
+	            }
+	            if(e && e.keyCode==39)
+	            { // 右
+	               camera.position.x += camera_step;
+	            }
+	         };
+
+         	function init()
+         	{
+				var geometry = new THREE.BoxGeometry(cube_side_length, cube_side_length, cube_side_length);
+         		var material = new THREE.MeshBasicMaterial({color: 0x00ff00});
+         		var material_frame = new THREE.MeshBasicMaterial({color: 0x00ff00, wireframe: true, wireframeLinewidth: 2, vertexColors: 0x000000});
+
+         		for(var i = 0; i < mapsize; i++)
+				{
+					for(var j = 0; j < mapsize; j++)
+					{					
+						/*var cube = new THREE.Mesh( geometry, material );
+						scene.add(cube);
+						cube.position.x = (j - (mapsize / 2)) * cube_side_length;
+						cube.position.y = 0;
+						cube.position.z = (i - (mapsize / 2)) * cube_side_length;*/
+
+						var frame_cube = new THREE.Mesh( geometry, grassMatertial);
+						scene.add(frame_cube);
+						frame_cube.position.x = (j - (mapsize / 2)) * cube_side_length;
+						frame_cube.position.y = 0;
+						frame_cube.position.z = (i - (mapsize / 2)) * cube_side_length;
+					}
+				}
+         	}
+
+         	init();
+
+			camera.position.z = 0;
+			camera.position.y = 1;
+			camera.position.x = 0;
+
+			var mousepos = 0;
+
+			document.getElementById('wf').onmousemove = function mouseMoveActor(event)
+	        {
+	        	var e = event || window.event;
+	        	if((e.screenX - (screen.width / 2)) > 150)
+	        	{
+	        		mousepos = -1;
+	        		//camera.rotation.y -= 0.01;
+	        	}	
+	        	else if((e.screenX - (screen.width / 2)) < -150)
+	        	{
+	        		mousepos = 1;
+	        		//camera.rotation.y += 0.01;
+	        	}     
+	        	else
+	        	{
+	        		mousepos = 0;
+	        	}   	
+	        }
+
+			var render = function () {
+				//cubeCamera.position.copy(cube.position);
+				//cubeCamera.updateCubeMap(renderer, scene);
+				camera.rotation.y += (0.01 * mousepos);
+				if(Math.abs(Math.abs(camera.rotation.y) - 6.28) <= 0.005)
+				{
+					camera.rotation.y = 0;
+				}
+				requestAnimationFrame(render);
+				renderer.render(scene, camera);
+			};
+
+			render();
+		</script>
+	</body>
+</html>
