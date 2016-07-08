@@ -1,0 +1,577 @@
+<!DOCTYPE HTML> 
+<html>
+	<head>
+		<meta http-equiv="content-Type" content="text/html; charset=utf-8">
+		<title>微信墙</title>	
+		<style type="text/css">
+		
+		*{
+			margin: 0px;
+			border: 0px;
+			padding: 0px;
+		}
+
+		.chatwords{
+			position: absolute;						
+			background-color: rgba(240,255,255,0.5);
+		}
+
+		#msg_admin{
+			margin-top: 0px;
+			background-color: red;
+		}
+
+		#msg_0{
+			margin-top: 0px;
+		}
+
+		#msg_1{
+			margin-top: 10px;
+		}
+
+		#msg_2{
+			margin-top: 10px;
+		}
+
+		#msg_3{
+			margin-top: 10px;
+		}
+
+		#msg_4{
+			margin-top: 10px;
+		}
+
+		.chatwords li{
+			list-style: none;
+			float: left;
+		}
+
+		.loading{
+			position: absolute;
+			z-index: 1000;
+		}
+
+		.headimg{
+			position: absolute;
+			z-index: 50;
+		}
+
+		.show_msg_board{
+			position: absolute;
+			white-space: nowrap;
+			overflow:hidden;
+		}
+
+		.notice-back{
+			position: absolute;
+			white-space: nowrap;
+			overflow: hidden;
+		}
+
+		#notice_board{
+			position: absolute;
+			top: 5px;
+		}
+
+		.content_bg{
+			position: absolute;
+			overflow: hidden;
+		}
+
+		.content{
+			position: absolute;
+			white-space: nowrap;
+		}
+
+		body{
+			overflow-y:hidden;
+		}
+
+		#backimg{
+			position: absolute;
+		}
+
+		</style>
+	</head>
+	<body>
+		<img id="backimg" src="background.jpg">
+		<script src="./jquery-3.0.0.min.js"></script>
+		<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+		<script>
+			var messages = [];
+			var socket = io('https://wall.cgcgbcbc.com');
+			var isDealingMessages = false;
+			var admin_timer = null;
+			var aimed_pos = [];
+
+			socket.on('new message', function (data) 
+			{
+				messages.push(data);
+				if(isDealingMessages == false)
+				{
+					dealWithMessage(messages.shift());
+				}
+			});
+
+			socket.on('admin', function (data) 
+			{			
+				dealWithMessage(data);
+			});
+
+			function dealWithMessage()
+			{			
+				var new_msg = arguments[0];
+				if('headimgurl' in new_msg)
+				{
+					isDealingMessages = true;
+					addNewMsgByUser(new_msg);
+				}
+				else
+				{
+					addNewMsgByAdmin(new_msg);
+				}
+			}
+
+			function addNewMsgByUser()
+			{
+				var msg = arguments[0];
+
+				$('#name_4').html(" " + msg['nickname']);
+				$('#content_4').html(msg['content']);	
+				$('#img_4').attr('src', msg['headimgurl']);
+				$('#loading_4').css('z-index', 100);
+
+				console.log(msg['content']);
+
+				animationMove();
+			}
+
+			function addNewMsgByAdmin()
+			{
+				var msg = arguments[0];
+
+				$('#name_admin').html(" " + msg['nickname']);
+				$('#content_admin').html(msg['content']);
+				$('#loading_admin').css('z-index', 1000);
+				$('#img_admin').attr('src', 'adminpic.jpg');
+
+				admin_left_time = 10;
+				
+				if(admin_timer != null)
+				{
+					clearInterval(admin_timer);
+				}
+
+				$('#content_admin').css('left', 0);
+				$('#msg_admin').show();
+				adminMsgCountdown();
+			}
+
+			function adminMsgCountdown()
+			{
+				admin_timer = setInterval('adminCountdown()', 1000);
+			}
+
+			function adminCountdown()
+			{
+				admin_left_time--;
+				if(admin_left_time == 0)
+				{
+					clearInterval(admin_timer);
+					$('#msg_admin').hide();
+				}
+			}
+
+			var msg_top_pos = 0;
+			var perHeight = 0;
+			var timer = null;
+			var movestep = 0;
+			var wordmovestep = 0;
+			var move_msg_array = [];
+			var admin_left_time = 10;
+
+			document.getElementsByTagName('body')[0].onload = function()
+			{
+				$('#backimg').css('left', 0);
+				$('#backimg').css('top', 0);
+				$('#backimg').width(document.documentElement.clientWidth);
+				$('#backimg').height(document.documentElement.clientHeight);
+				$('#backimg').css('z-index', -20);
+				$('#backimg').attr('src', 'background.jpg');
+				$('#backimg').css('opacity', 0.6);
+
+				var height_all = document.documentElement.clientHeight;
+				var width_all = document.documentElement.clientWidth;
+
+				perHeight = (height_all - 50) / 5;
+				var perWidth = width_all * 0.8;
+
+				movestep = perHeight / 10;
+
+				msg_top_pos = perHeight + 10;
+
+				$('.pagename').height(perHeight);
+				$('.pagename').width(perWidth);
+
+				$('.chatwords').width(perWidth);
+				$('.chatwords').height(perHeight);
+
+				var smaller = 0;
+
+				$('.loadimg').attr('src', 'loading.gif');
+
+				if(perHeight < perWidth)
+				{
+					$('.headimg').width(perHeight);
+					$('.headimg').height(perHeight);
+					smaller = perHeight;
+				}
+				else
+				{
+					$('.headimg').width(perWidth);
+					$('.headimg').height(perWidth);
+					smaller = perWidth;
+				}
+
+				$('.loadimg').width($('.headimg').height());
+				$('.loadimg').height($('.headimg').width());
+				
+				$('.name').height(perHeight * 0.2);
+				$('.name').css("font-size", perHeight * 0.2 - 10);
+				$('.name').css("left", smaller);
+				$('.content_bg').css('width', perWidth - smaller);
+				$('.content_bg').height(perHeight * 0.8);
+				$('.content_bg').css("font-size", perHeight * 0.8 - 15);
+				$('.content_bg').css("left", smaller);
+
+				$('#msg_admin').hide();
+
+				wordmovestep = (perHeight * 0.8 - 15) * 3
+								
+				var left_offset = (document.documentElement.clientWidth - perWidth) / 2;
+				$('.chatwords').css('left', 0);
+				
+				$('#msg_admin').css('z-index', 100);
+				$('#msg_0').css('top', 0);	
+				$('#msg_1').css('top', (perHeight + 10));	
+				$('#msg_2').css('top', 2 * (perHeight + 10));	
+				$('#msg_3').css('top', 3 * (perHeight + 10));	
+				$('#msg_4').css('top', 4 * (perHeight + 10));
+
+				for(var i = 0; i < 5; i++)
+				{
+					aimed_pos.push(i * (perHeight + 10));
+				}
+
+				$('#msg_admin').css('top', aimed_pos[0]);		
+				$('#img_admin').css('left', 0);
+
+				$('#img_0').css('left', 0);
+				$('#img_1').css('left', 0);
+				$('#img_2').css('left', 0);
+				$('#img_3').css('left', 0);
+				$('#img_4').css('left', 0);
+
+				$('#loading_0').css('top', $('#img_0').position().top);
+				$('#loading_1').css('top', $('#img_1').position().top);
+				$('#loading_2').css('top', $('#img_2').position().top);
+				$('#loading_3').css('top', $('#img_3').position().top);
+				$('#loading_4').css('top', $('#img_4').position().top);
+				$('#loading_0').css('left', 0);
+				$('#loading_1').css('left', 0);
+				$('#loading_2').css('left', 0);
+				$('#loading_3').css('left', 0);
+				$('#loading_4').css('left', 0);
+
+				$('.show_msg_board').css('top', perHeight + 10);
+				$('.show_msg_board').css('width', perWidth);
+				$('.show_msg_board').css('height', perHeight * 4 + 35);
+				$('.show_msg_board').css('overflow', 'hidden');
+				$('.show_msg_board').css('left', left_offset);
+
+				$('.notice-back').css('width', document.documentElement.clientWidth);
+				$('.notice-back').css('height', perHeight / 2);
+				$('.notice-back').css('left', 0);
+				$('.notice-back').css('top', 0);
+
+				$('#notice_board').css('left', 0);
+				$('#notice_board').css('font-size', perHeight / 2);
+
+				getOldMsg();
+
+				startScrollNotice();
+
+				movingLongInput();
+			}
+		
+			function startScrollNotice()
+			{
+				var notice_timer = setInterval('scrollNotice()', 1000);
+			}
+
+			function scrollNotice()
+			{
+				$('#notice_board').css('left', $('#notice_board').position().left + 50);						
+				if($('#notice_board').position().left > document.documentElement.clientWidth)
+				{
+					$('#notice_board').css('left', -100);
+				}
+			}
+			
+
+			function animationMove()
+			{				
+				timer = setInterval("msgMove()", 10);
+			}
+
+			function msgMove()
+			{
+				$('#msg_0').css('top', ($('#msg_0').position().top - movestep));	
+				$('#msg_1').css('top', ($('#msg_1').position().top - movestep));
+				$('#msg_2').css('top', ($('#msg_2').position().top - movestep));	
+				$('#msg_3').css('top', ($('#msg_3').position().top - movestep));	
+				$('#msg_4').css('top', ($('#msg_4').position().top - movestep));
+
+				if($('#msg_1').position().top <= 0)
+				{
+					clearInterval(timer);
+
+					$('#msg_1').css('top', aimed_pos[0]);
+					$('#msg_2').css('top', aimed_pos[1]);	
+					$('#msg_3').css('top', aimed_pos[2]);	
+					$('#msg_4').css('top', aimed_pos[3]);
+
+					$('#msg_0').attr('id', 'msg_5');
+					$('#name_0').attr('id', 'name_5');
+					$('#content_0').attr('id', 'content_5');
+					$('#content_bg_0').attr('id', 'content_bg_5');
+					$('#loading_0').attr('id', 'loading_5');
+					$('#img_0').attr('id', 'img_5');
+					$('#msg_1').attr('id', 'msg_0');
+					$('#name_1').attr('id', 'name_0');
+					$('#content_1').attr('id', 'content_0');
+					$('#content_bg_1').attr('id', 'content_bg_0');
+					$('#loading_1').attr('id', 'loading_0');
+					$('#img_1').attr('id', 'img_0');
+					$('#msg_2').attr('id', 'msg_1');
+					$('#name_2').attr('id', 'name_1');
+					$('#content_2').attr('id', 'content_1');
+					$('#content_bg_2').attr('id', 'content_bg_1');
+					$('#loading_2').attr('id', 'loading_1');
+					$('#img_2').attr('id', 'img_1');
+					$('#msg_3').attr('id', 'msg_2');
+					$('#name_3').attr('id', 'name_2');
+					$('#content_3').attr('id', 'content_2');
+					$('#content_bg_3').attr('id', 'content_bg_2');
+					$('#loading_3').attr('id', 'loading_2');
+					$('#img_3').attr('id', 'img_2');
+					$('#msg_4').attr('id', 'msg_3');
+					$('#name_4').attr('id', 'name_3');
+					$('#content_4').attr('id', 'content_3');
+					$('#content_bg_4').attr('id', 'content_bg_3');
+					$('#loading_4').attr('id', 'loading_3');
+					$('#img_4').attr('id', 'img_3');
+					$('#msg_5').attr('id', 'msg_4');
+					$('#name_5').attr('id', 'name_4');
+					$('#content_5').attr('id', 'content_4');
+					$('#content_bg_5').attr('id', 'content_bg_4');
+					$('#loading_5').attr('id', 'loading_4');
+					$('#img_5').attr('id', 'img_4');
+										
+					$('#msg_4').css('top', aimed_pos[4]);
+					$('#content_4').css('left', 0);
+
+					if(messages.length != 0)
+					{
+						dealWithMessage(messages.shift());						
+					}
+					else
+					{
+						isDealingMessages = false;
+					}
+				}	
+			}
+
+			function movingLongInput()
+			{
+				var move_timer = setInterval("movingWordAnimation()", 1000);
+			}
+
+			function movingWordAnimation()
+			{
+				if($('#content_admin').width() > $('#content_bg_admin').width())
+				{
+					$('#content_admin').css('left', $('#content_admin').position().left - wordmovestep);	
+					if($('#content_admin').position().left + $('#content_admin').width() <= 0) 
+					{
+						$('#content_admin').css('left', $('#content_bg_admin').width());
+					};			
+				}
+				if($('#content_0').width() > $('#content_bg_0').width())
+				{
+					$('#content_0').css('left', $('#content_0').position().left - wordmovestep);
+					if($('#content_0').position().left + $('#content_0').width() <= 0) 
+					{
+						$('#content_0').css('left', $('#content_bg_0').width());
+					};
+					//console.log($('#content_0').position().left, $('#content_0').css('left'));
+				}
+				if($('#content_1').width() > $('#content_bg_1').width())
+				{
+					$('#content_1').css('left', $('#content_1').position().left - wordmovestep);
+					if($('#content_1').position().left + $('#content_1').width() <= 0) 
+					{
+						$('#content_1').css('left', $('#content_bg_1').width());
+					};
+					//console.log($('#content_1').position().left, $('#content_1').css('left'));
+				}
+				if($('#content_2').width() > $('#content_bg_2').width())
+				{
+					$('#content_2').css('left', $('#content_2').position().left - wordmovestep);
+					if($('#content_2').position().left + $('#content_2').width() <= 0) 
+					{
+						$('#content_2').css('left', $('#content_bg_2').width());
+					};
+					//console.log($('#content_2').position().left, $('#content_2').css('left'));
+				}
+				if($('#content_3').width() > $('#content_bg_3').width())
+				{
+					$('#content_3').css('left', $('#content_3').position().left - wordmovestep);
+					if($('#content_3').position().left + $('#content_3').width() <= 0) 
+					{
+						$('#content_3').css('left', $('#content_bg_3').width());
+					};
+					//console.log($('#content_3').position().left, $('#content_3').css('left'));
+				}
+			}
+
+			$('#img_admin').onload = function()
+			{
+				$('#loading_admin').css('z-index', -1);
+			}
+			$('#img_0').onload = function()
+			{
+				$('#loading_0').css('z-index', -1);
+			}
+			$('#img_1').onload = function()
+			{
+				$('#loading_1').css('z-index', -1);
+			}
+			$('#img_2').onload = function()
+			{
+				$('#loading_2').css('z-index', -1);
+			}
+			$('#img_3').onload = function()
+			{
+				$('#loading_3').css('z-index', -1);
+			}
+			$('#img_4').onload = function()
+			{
+				$('#loading_4').css('z-index', -1);
+			}
+
+			function createXHR()
+			{
+				if(typeof XMLHttpRequest != "undefined")
+				{
+					return new XMLHttpRequest();
+				}
+				else
+				{
+					throw new Error("No XHR object available");
+				}
+			}			
+
+			function getOldMsg()
+			{
+				var xhr = createXHR();
+				xhr.onreadystatechange = function(event)
+				{
+					if(xhr.readyState == 4)
+					{
+						if((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304)
+						{
+							var response = xhr.responseText;
+							messages_init(response);
+						}
+						else
+						{
+							alert("Request was unsuccessful:" + xhr.status);
+						}
+					}
+				}
+				xhr.open('get', 'https://wall.cgcgbcbc.com/api/messages?num=4', true);
+				xhr.send(null);
+			}
+
+			function messages_init()
+			{
+				var msg = eval(arguments[0]);
+						
+				$('#name_0').html(" " + msg[3]['nickname']);
+				$('#content_0').html(msg[3]['content']);	
+				$('#img_0').attr('src', msg[3]['headimgurl']);
+				$('#name_1').html(" " + msg[2]['nickname']);
+				$('#content_1').html(msg[2]['content']);	
+				$('#img_1').attr('src', msg[2]['headimgurl']);
+				$('#name_2').html(" " + msg[1]['nickname']);
+				$('#content_2').html(msg[1]['content']);	
+				$('#img_2').attr('src', msg[1]['headimgurl']);
+				$('#name_3').html(" " + msg[0]['nickname']);
+				$('#content_3').html(msg[0]['content']);	
+				$('#img_3').attr('src', msg[0]['headimgurl']);
+			}
+
+		</script>
+		<div class="pagename">
+			<div class="notice-back">
+				<div id="notice_board"><h6>欢迎使用微信墙</h6></div>
+			</div>
+		</div>
+		
+		<div class="show_msg_board">
+			<ul class="chatwords" id="msg_admin">				
+				<li><img class="loadimg" id="load_admin"><img class="headimg" id="img_admin"></li>
+				<li>
+					<h6 class="name" id="name_admin"></h6>
+					<div class="content_bg" id="content_bg_admin"><span class="content" id="content_admin"></span></div>
+				</li>
+			</ul>
+			<ul class="chatwords" id="msg_0">		
+				<li><img class="loadimg" id="load_0"><img class="headimg" id="img_0"></li>
+				<li>
+					<h6 class="name" id="name_0"></h6>
+					<div class="content_bg" id="content_bg_0"><span class="content" id="content_0"></span></div>
+				</li>
+			</ul>	
+			<ul class="chatwords" id="msg_1">			
+				<li><img class="loadimg" id="load_1"><img class="headimg" id="img_1"></li>
+				<li>
+					<h6 class="name" id="name_1"></h6>
+					<div class="content_bg" id="content_bg_1"><span class="content" id="content_1"></span></div>
+				</li>
+			</ul>	
+			<ul class="chatwords" id="msg_2">			
+				<li><img class="loadimg" id="load_2"><img class="headimg" id="img_2"></li>
+				<li>
+					<h6 class="name" id="name_2"></h6>
+					<div class="content_bg" id="content_bg_2"><span class="content" id="content_2"></span></div>
+				</li>
+			</ul>	
+			<ul class="chatwords" id="msg_3">	
+				<li><img class="loadimg" id="load_3"><img class="headimg" id="img_3"></li>
+				<li>
+					<h6 class="name" id="name_3"></h6>
+					<div class="content_bg" id="content_bg_3"><span class="content" id="content_3"></span></div>
+				</li>
+			</ul>	
+			<ul class="chatwords" id="msg_4">		
+				<li><img class="loadimg" id="load_4"><img class="headimg" id="img_4"></li>
+				<li>
+					<h6 class="name" id="name_4"></h6>
+					<div class="content_bg" id="content_bg_4"><span class="content" id="content_4"></span></div>
+				</li>
+			</ul>
+		</div>
+	</body>
+</html>

@@ -52,7 +52,8 @@
 				console.log("event", event);
 	            var e = event || window.event || arguments.callee.caller.arguments[0];
 	            var direction = camera.getWorldDirection();
-	            console.log(direction);
+	            direction.multiplyScalar(camera_step);
+
 	            if(e && e.keyCode==38)
 	            { // 上
 	                camera.position.x += direction.x;
