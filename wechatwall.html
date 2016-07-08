@@ -204,7 +204,7 @@
 				perHeight = (height_all - 50) / 5;
 				var perWidth = width_all * 0.8;
 
-				movestep = perHeight / 10;
+				movestep = perHeight / 50;
 
 				msg_top_pos = perHeight + 10;
 
@@ -249,17 +249,28 @@
 				var left_offset = (document.documentElement.clientWidth - perWidth) / 2;
 				$('.chatwords').css('left', 0);
 				
-				$('#msg_admin').css('z-index', 100);
-				$('#msg_0').css('top', 0);	
-				$('#msg_1').css('top', (perHeight + 10));	
-				$('#msg_2').css('top', 2 * (perHeight + 10));	
-				$('#msg_3').css('top', 3 * (perHeight + 10));	
-				$('#msg_4').css('top', 4 * (perHeight + 10));
-
 				for(var i = 0; i < 5; i++)
 				{
 					aimed_pos.push(i * (perHeight + 10));
 				}
+
+				var dis = Math.min(aimed_pos[1] - aimed_pos[0], aimed_pos[2] - aimed_pos[1],
+					aimed_pos[3] - aimed_pos[2], aimed_pos[4] - aimed_pos[3]);
+
+				var start = aimed_pos[0];
+				aimed_pos = [];
+
+				for(var i = 0; i < 5; i++)
+				{
+					aimed_pos.push(start + i * dis);
+				}
+
+				$('#msg_admin').css('z-index', 100);
+				$('#msg_0').css('top', aimed_pos[0]);	
+				$('#msg_1').css('top', aimed_pos[1]);	
+				$('#msg_2').css('top', aimed_pos[2]);	
+				$('#msg_3').css('top', aimed_pos[3]);	
+				$('#msg_4').css('top', aimed_pos[4]);
 
 				$('#msg_admin').css('top', aimed_pos[0]);		
 				$('#img_admin').css('left', 0);
