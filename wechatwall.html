@@ -21,26 +21,6 @@
 			background-color: red;
 		}
 
-		#msg_0{
-			margin-top: 0px;
-		}
-
-		#msg_1{
-			margin-top: 10px;
-		}
-
-		#msg_2{
-			margin-top: 10px;
-		}
-
-		#msg_3{
-			margin-top: 10px;
-		}
-
-		#msg_4{
-			margin-top: 10px;
-		}
-
 		.chatwords li{
 			list-style: none;
 			float: left;
@@ -97,6 +77,8 @@
 		<img id="backimg" src="background.jpg">
 		<script src="./jquery-3.0.0.min.js"></script>
 		<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+		<link rel="stylesheet" href="./weface.css">
+		<script src="./weface.js"></script>
 		<script>
 			var messages = [];
 			var socket = io('https://wall.cgcgbcbc.com');
@@ -105,7 +87,9 @@
 			var aimed_pos = [];
 
 			socket.on('new message', function (data) 
-			{
+			{			
+				var weface = new Weface();
+				data['content'] = weface.compile(data['content']);
 				messages.push(data);
 				if(isDealingMessages == false)
 				{
@@ -115,6 +99,8 @@
 
 			socket.on('admin', function (data) 
 			{			
+				var weface = new Weface();
+				data['content'] = weface.compile(data['content']);
 				dealWithMessage(data);
 			});
 
@@ -204,7 +190,7 @@
 				perHeight = (height_all - 50) / 5;
 				var perWidth = width_all * 0.8;
 
-				movestep = perHeight / 50;
+				movestep = perHeight / 30;
 
 				msg_top_pos = perHeight + 10;
 
@@ -235,16 +221,16 @@
 				$('.loadimg').height($('.headimg').width());
 				
 				$('.name').height(perHeight * 0.2);
-				$('.name').css("font-size", perHeight * 0.2 - 10);
+				$('.name').css("font-size", perHeight * 0.2 - 5);
 				$('.name').css("left", smaller);
 				$('.content_bg').css('width', perWidth - smaller);
 				$('.content_bg').height(perHeight * 0.8);
-				$('.content_bg').css("font-size", perHeight * 0.8 - 15);
+				$('.content_bg').css("font-size", perHeight * 0.8 - 20);
 				$('.content_bg').css("left", smaller);
 
 				$('#msg_admin').hide();
 
-				wordmovestep = (perHeight * 0.8 - 15) * 3
+				wordmovestep = (perHeight * 0.8 - 20) * 3
 								
 				var left_offset = (document.documentElement.clientWidth - perWidth) / 2;
 				$('.chatwords').css('left', 0);
@@ -397,7 +383,7 @@
 					else
 					{
 						isDealingMessages = false;
-					}
+					}				
 				}	
 			}
 
