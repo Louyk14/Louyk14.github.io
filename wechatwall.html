@@ -90,6 +90,7 @@
 			{			
 				var weface = new Weface();
 				data['content'] = weface.compile(data['content']);
+				data['nickname'] = weface.compile(data['nickname']);
 				messages.push(data);
 				if(isDealingMessages == false)
 				{
