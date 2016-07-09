@@ -248,6 +248,17 @@
 			
 			two_dim_map_create();
 			console.log(two_dim_map_list);
+
+		//添加模型
+			var material = new THREE.MeshLambertMaterial( { color:0xffffff, side: THREE.DoubleSide } );
+	        var loader = new THREE.VTKLoader();
+	        loader.addEventListener( 'load', function ( event ) {
+	            var geometry = event.content;
+	            var mesh = new THREE.Mesh( geometry, material );
+	            mesh.position.setY(0);
+	            scene.add( mesh );
+	        } );
+        	loader.load( "models/vtk/bunny.vtk" );
 		</script>
 		
 	</body>
