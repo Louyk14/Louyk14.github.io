@@ -251,13 +251,13 @@
 			console.log(two_dim_map_list);
 
 		//添加模型
-			var material = new THREE.MeshLambertMaterial( { color:0xffffff, side: THREE.DoubleSide } );
+			var model_material = new THREE.MeshLambertMaterial( { color:0xffffff, side: THREE.DoubleSide } );
 	        var loader = new THREE.VTKLoader();
 	        loader.addEventListener( 'load', function ( event ) {
-	            var geometry = event.content;
-	            var mesh = new THREE.Mesh( geometry, material );
-	            mesh.position.setY(4);
-	            scene.add( mesh );
+	            var model_geometry = event.content;
+	            var model_mesh = new THREE.Mesh( model_geometry, model_material );
+	            model_mesh.position.setY(4);
+	            scene.add( model_mesh );
 	        } );
         	loader.load( "bunny.vtk" );
 		</script>
