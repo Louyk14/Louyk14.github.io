@@ -260,7 +260,7 @@
 			two_dim_map_create();
 
 		//添加模型
-			/*var model_texture = new THREE.ImageUtils.loadTexture("sdsd004.jpg");	
+			var model_texture = new THREE.ImageUtils.loadTexture("sdsd004.jpg");	
 			var model_material = new THREE.MeshLambertMaterial({map: model_texture});
 			console.log(model_material);
 	        var loader = new THREE.JSONLoader();
@@ -269,38 +269,7 @@
 	            var model_mesh = new THREE.Mesh(model_geometry, model_material);
 	            model_mesh.position.setY(0.8);
 	            scene.add(model_mesh);
-	        });*/
-			 var mesher;  
-  
-        var loader = new THREE.OBJLoader();  
-        loader.load('kulou.obj', function (geometryer) {  
-         var materialer = new THREE.MeshLambertMaterial({color: 0x5C3A21});  
-  
-  
-         //store global reference to .obj  
-        globalObject = geometryer;  
-  
-      geometryer.traverse( function (child) {  
-          if ( child instanceof THREE.Mesh ) {  
-              child.material.map = THREE.ImageUtils.loadTexture( 'sdsd004.jpg');  
-              child.material.needsUpdate = true;  
-          }  
-      });  
-  
-            // geometry is a group of children. If a child has one additional child it's probably a mesh  
-            geometryer.children.forEach(function (child) {  
-                if (child.children.length == 1) {  
-                    if (child.children[0] instanceof THREE.Mesh) {  
-                        child.children[0].material = materialer;  
-                    }  
-                }  
-            });  
-  
-            mesher = geometryer;  
-            geometryer.scale.set(0.1, 0.1, 0.1);  
-            geometryer.position.y = 0.8;  
-            scene.add(geometryer);  
-        });  
+	        });
 		</script>
 		
 	</body>
