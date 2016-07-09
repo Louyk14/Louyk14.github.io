@@ -255,6 +255,7 @@
 	        var loader = new THREE.VTKLoader();
         	loader.load("bunny.vtk",  function ( event ) {
 	            var model_geometry = event.content;
+	            console.log(event.content);
 	            var model_mesh = new THREE.Mesh( model_geometry, model_material );
 	            model_mesh.position.setY(4);
 	            scene.add(model_mesh);
