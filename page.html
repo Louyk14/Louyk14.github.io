@@ -96,7 +96,7 @@
 			});
 
 			var line_geometry = new THREE.Geometry();
-			geometry.vertices.push(
+			line_geometry.vertices.push(
 				new THREE.Vector2(0, 0),
 				new THREE.Vector2(0, 20),
 				new THREE.Vector2(20, 0),
@@ -225,7 +225,6 @@
 					direction.applyAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI / 2);
 	                camera.position.x += direction.x;
 	                camera.position.z += direction.z;
-	                console.log(direction);
 				}
 				else if(movedirection == 4)
 				{
