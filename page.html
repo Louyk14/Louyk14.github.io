@@ -97,6 +97,7 @@
 	                {
 	                	jumping_time[0] = 0;
 	                	isJumping[0] = true;
+	                	var timer = setInterval(, 1000);
 	                }
 	            }
 	         };
@@ -161,10 +162,13 @@
 					if(jumping_time[0] <= 2)
 					{
 						camera.translateY(jump_dis[jumping_time[0]]);
+						console.log(camera.position.y, jumping_time);
 					}
 					else
 					{
 						camera.translateY(-1 * jump_dis[5 - jumping_time[0]]);
+						console.log(camera.position.y);
+						console.log(camera.position.y, jumping_time);
 					}
 					jumping_time++;
 					
