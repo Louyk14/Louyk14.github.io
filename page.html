@@ -237,18 +237,17 @@
 						var newDiv = document.createElement("div");
 						var newSpan = document.createElement("span");
 						newSpan.innerHTML = "0";
-						newSpan.style.cssText = "font-size:8px";
+						newSpan.style.cssText = "font-size:8px;text-align:center;";
 						newDiv.appendChild(newSpan);
-						newDiv.style.cssText = "width: 10px;height: 10px;border: 1px solid black;position: absolute;left:" + i * 10 + "px;top: " + j * 10 + "px;margin: 0px;padding: 0px;";
+						newDiv.style.cssText = "width: 10px;height: 10px;border: 1px solid black;position: absolute;left:" + i * 10 + "px;top: " + j * 10 + "px;margin: 0px;padding: 0px;text-align:center;";
 						document.body.appendChild(newDiv);
 						two_dim_map_list.push(newSpan);
 					}
 				}
 			}
-
-			console.log(two_dim_map_list);
-
+			
 			two_dim_map_create();
+			console.log(two_dim_map_list);
 		</script>
 		
 	</body>
