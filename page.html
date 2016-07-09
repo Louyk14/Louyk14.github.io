@@ -111,14 +111,14 @@
 	            if(e && e.keyCode==37)
 	            { // 左
 	            	direction.applyAxisAngle(new THREE.Vector3(0, 1, 0), -Math.PI / 2);
-	                camera.translateZ(direction.x);
-	                camera.translateX(direction.z);
+	                camera.translateX(direction.x);
+	                camera.translateZ(direction.z);
 	            }
 	            if(e && e.keyCode==39)
 	            { // 右
 	                direction.applyAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI / 2);
-	                camera.translateX(-1 * direction.z);
-	                camera.translateZ(direction.x);
+	                camera.translateX(direction.x);
+	                camera.translateZ(direction.z);
 	            }
 	            if(e && e.keyCode==32)
 	            { // 空格
