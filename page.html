@@ -10,6 +10,7 @@
 		<script src="js/three.js"></script>
 		<script src="VTKLoader.js"></script>
 		<script src="OBJLoader.js"></script>
+		<script src="JSONLoader.js"></script>
 		<script>
 		var scene = new THREE.Scene();
 		var cubeCamera = new THREE.CubeCamera( 1, 100000, 128 );
@@ -252,7 +253,7 @@
 
 		//添加模型
 			var model_material = new THREE.MeshLambertMaterial( { color:0xffffff, side: THREE.DoubleSide } );
-	        var loader = new THREE.OBJLoader();
+	        var loader = new THREE.JSONLoader();
         	loader.load("kulou.js",  function (event) {
         		console.log(event);
 	            var model_geometry = event;
