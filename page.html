@@ -15,6 +15,8 @@
 		var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
 		scene.add(cubeCamera);
 
+		var movedirection = 0;  
+
 		//重力相关
 			var jump_up_time = 99;
 			var g = 0.000049;
@@ -94,30 +96,23 @@
 			
 			document.onkeydown=function(event){
 	            var e = event || window.event || arguments.callee.caller.arguments[0];
-	            var direction = camera.getWorldDirection();
-	            direction.multiplyScalar(camera_step);
+	            
 
 	            if(e && e.keyCode==38)
 	            { // 上
-	                camera.position.x += direction.x;
-	                camera.position.z += direction.z;
+	                movedirection = 0;
 	            }
 	            if(e && e.keyCode==40)
 	            { //下
-	                camera.position.x -= direction.x;
-	                camera.position.z -= direction.z;
+	                movedirection = 1;
 	            }            
 	            if(e && e.keyCode==37)
 	            { // 左
-	            	direction.applyAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI / 2);
-	                camera.position.x += direction.x;
-	                camera.position.z += direction.z;
+	            	movedirection = 2;
 	            }
 	            if(e && e.keyCode==39)
 	            { // 右
-	                direction.applyAxisAngle(new THREE.Vector3(0, 1, 0), -Math.PI / 2);
-	                camera.position.x += direction.x;
-	                camera.position.z += direction.z;
+	                movedirection = 3;
 	            }
 	            if(e && e.keyCode==32)
 	            { // 空格
@@ -185,6 +180,32 @@
 			var render = function () {
 				//cubeCamera.position.copy(cube.position);
 				//cubeCamera.updateCubeMap(renderer, scene);
+				
+				var direction = camera.getWorldDirection();
+	            direction.multiplyScalar(camera_step);
+
+				if(movedirection == 1)
+				{
+					camera.position.x += direction.x;
+	                camera.position.z += direction.z;
+				}
+				else if(movedirection == 2)
+				{
+					camera.position.x -= direction.x;
+	                camera.position.z -= direction.z;
+				}
+				else if(movedirection == 3)
+				{
+					direction.applyAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI / 2);
+	                camera.position.x += direction.x;
+	                camera.position.z += direction.z;
+				}
+				else if(movedirection == 4)
+				{
+					direction.applyAxisAngle(new THREE.Vector3(0, 1, 0), -Math.PI / 2);
+	                camera.position.x += direction.x;
+	                camera.position.z += direction.z;
+				}
 				camera.rotation.y += (0.01 * mousepos);
 				if(Math.abs(Math.abs(camera.rotation.y) - 6.28) <= 0.005)
 				{
