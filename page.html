@@ -270,29 +270,37 @@
 	            model_mesh.position.setY(0.8);
 	            scene.add(model_mesh);
 	        });*/
-			function LoadModelWithTexture()      
-			{            //加载纹理          
-				var texture = new THREE.Texture();            //加载图片          
-				var imgLoader = new THREE.ImageLoader();          
-				imgLoader.load('sdsd004.jpg',function(img)          
-					{              //将图片值赋于纹理             
-						 texture.image = img;              
-						texture.needsUpdate = true;          });            //加载模型          
-				var _loader = new THREE.OBJLoader();         
-				 _loader.load('kulou.obj',function(obj)          
-				{              
-					obj.traverse(function(child)              
-					{                    
-						if (child instanceof THREE.Mesh)                 
-						 {                                            						child.material.map = texture;	                  		child.material.transparent = true;                 
-						 }              
-					});             
-					 obj.position.y = 0.8;   
-					 obj.scale.set(0.1, 0.1, 0.1);           
-					scene.add(obj);          
-				});    
-			  } 
-			  LoadModelWithTexture();
+			 var mesher;  
+  
+        var loader = new THREE.OBJLoader();  
+        loader.load('kulou.obj', function (geometryer) {  
+         var materialer = new THREE.MeshLambertMaterial({color: 0x5C3A21});  
+  
+  
+         //store global reference to .obj  
+        globalObject = geometryer;  
+  
+      geometryer.traverse( function (child) {  
+          if ( child instanceof THREE.Mesh ) {  
+              child.material.map = THREE.ImageUtils.loadTexture( 'sdsd004.jpg');  
+              child.material.needsUpdate = true;  
+          }  
+      });  
+  
+            // geometry is a group of children. If a child has one additional child it's probably a mesh  
+            geometryer.children.forEach(function (child) {  
+                if (child.children.length == 1) {  
+                    if (child.children[0] instanceof THREE.Mesh) {  
+                        child.children[0].material = materialer;  
+                    }  
+                }  
+            });  
+  
+            mesher = geometryer;  
+            geometryer.scale.set(0.1, 0.1, 0.1);  
+            geometryer.rotation.y = 0.8;  
+            scene.add(geometryer);  
+        });  
 		</script>
 		
 	</body>
