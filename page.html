@@ -16,21 +16,50 @@
 		scene.add(cubeCamera);
 
 		//重力相关
-			var jump_up_time = 2;
+			var jump_up_time = 9;
 			var g = 9.8;
 			var jumping_time = [];
 			var isJumping = [];
 			var jump_dis = [];
 			jumping_time.push(0);
 			isJumping.push(false);
+			var jumpTimer = null;
 
-			jump_dis.push(0);
-			jump_dis.push(0);
-			jump_dis.push(0);
 
-			jump_dis[2] = 0.5 * g;
-			jump_dis[1] = 0.5 * g * 4 - jump_dis[2];
-			jump_dis[0] = 0.5 * g * 9 - jump_dis[1];
+			for(var i = 0; i <= 10; i++)
+			{
+				jump_dis.push(0);		
+			}
+
+			for(var i = 9; i >= 0; i--)
+			{
+				jump_dis[i] = 0.5 * g * (10 - i) * (10 - i) - jump_dis[i + 1];
+			}
+
+			function jumpMove()
+			{
+				if(isJumping[0] == true)
+				{
+					if(jumping_time[0] <= 9)
+					{
+						camera.translateY(jump_dis[jumping_time[0]]);
+						console.log(camera.position.y, jumping_time);
+					}
+					else
+					{
+						camera.translateY(-1 * jump_dis[19 - jumping_time[0]]);
+						console.log(camera.position.y, jumping_time);
+					}
+					jumping_time[0]++;
+					
+					if(jumping_time[0] >= 20)
+					{
+						isJumping[0] = false;
+						jumping_time[0] = 0;
+						clearInterval(jumpTimer);
+					}
+				}
+			}
 
 		//一些常量
 			var mapsize = 20;
@@ -97,7 +126,7 @@
 	                {
 	                	jumping_time[0] = 0;
 	                	isJumping[0] = true;
-	                	//var timer = setInterval(, 1000);
+	                	jumpTimer = setInterval('jumpMove()', 100);
 	                }
 	            }
 	         };
@@ -157,26 +186,6 @@
 			var render = function () {
 				//cubeCamera.position.copy(cube.position);
 				//cubeCamera.updateCubeMap(renderer, scene);
-				if(isJumping[0] == true)
-				{
-					if(jumping_time[0] <= 2)
-					{
-						camera.translateY(jump_dis[jumping_time[0]]);
-						console.log(camera.position.y, jumping_time);
-					}
-					else
-					{
-						camera.translateY(-1 * jump_dis[5 - jumping_time[0]]);
-						console.log(camera.position.y, jumping_time);
-					}
-					jumping_time++;
-					
-					if(jumping_time[0] >= 6)
-					{
-						isJumping[0] = false;
-						jumping_time[0] = 0;
-					}
-				}
 				camera.rotation.y += (0.01 * mousepos);
 				if(Math.abs(Math.abs(camera.rotation.y) - 6.28) <= 0.005)
 				{
