@@ -262,11 +262,31 @@
 			var model_texture = new THREE.ImageUtils.loadTexture("sdsd004.jpg");	
 			var model_material = new THREE.MeshLambertMaterial({map: model_texture});
 	        var loader = new THREE.JSONLoader();
-        	loader.load("kulou.js",  function (event) {
-	            var model_geometry = event;
-	            var model_mesh = new THREE.Mesh(model_geometry, model_material);
-	            model_mesh.position.setY(0.8);
-	            scene.add(model_mesh);
+        	loader.load("kulou.js",  function (model_geometry) {
+	            var material = new THREE.MeshLambertMaterial({color: 0x5C3A21});  
+  
+  
+         //store global reference to .obj  
+        	globalObject = model_geometry;  
+  
+      		model_geometry.traverse( function (child)
+      		 {  
+          		if ( child instanceof THREE.Mesh ) {  
+              	child.material.map = THREE.ImageUtils.loadTexture( 'sdsd004.jpg');  
+              	child.material.needsUpdate = true;  
+          	}  
+      	});  
+  
+            // geometry is a group of children. If a child has one additional child it's probably a mesh  
+            model_geometry.children.forEach(function (child) {  
+                if (child.children.length == 1) {  
+                    if (child.children[0] instanceof THREE.Mesh) {  
+                        child.children[0].material = material;  
+                    }  
+                }  
+            }); 
+	            model_geometry.position.setY(0.8);
+	            scene.add(model_geometry);
 	        });
 		</script>
 		
