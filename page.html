@@ -19,6 +19,13 @@
 
 		var movedirection = 0;  
 
+		//创建光源 
+			var pointLight = new THREE.PointLight(0xFFFFFF);  
+			pointLight.position.x = 0; 
+			pointLight.position.y = 10; 
+			pointLight.position.z = 0; 
+			scene.add(pointLight); 
+
 		//重力相关
 			var jump_up_time = 99;
 			var g = 0.000049;
@@ -253,7 +260,6 @@
 
 		//添加模型
 			var model_texture = new THREE.ImageUtils.loadTexture("sdsd004.jpg");	
-			console.log(model_texture);
 			var model_material = new THREE.MeshLambertMaterial({map: model_texture});
 	        var loader = new THREE.JSONLoader();
         	loader.load("kulou.js",  function (event) {
