@@ -97,22 +97,21 @@
 			document.onkeydown=function(event){
 	            var e = event || window.event || arguments.callee.caller.arguments[0];
 	            
-
 	            if(e && e.keyCode==38)
 	            { // 上
-	                movedirection = 0;
+	                movedirection = 1;
 	            }
 	            if(e && e.keyCode==40)
 	            { //下
-	                movedirection = 1;
+	                movedirection = 2;
 	            }            
 	            if(e && e.keyCode==37)
 	            { // 左
-	            	movedirection = 2;
+	            	movedirection = 3;
 	            }
 	            if(e && e.keyCode==39)
 	            { // 右
-	                movedirection = 3;
+	                movedirection = 4;
 	            }
 	            if(e && e.keyCode==32)
 	            { // 空格
@@ -124,6 +123,15 @@
 	                }
 	            }
 	         };
+
+	         document.onkeyup=function(event){
+	            var e = event || window.event || arguments.callee.caller.arguments[0];
+
+	            if(e && (e.keyCode==38 || e.keyCode==40 || e.keyCode==37 || e.keyCode==39))
+	            { // 上
+	                movedirection = 0;
+	            }
+	        }
 
          	function init()
          	{
