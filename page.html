@@ -259,8 +259,8 @@
 			two_dim_map_create();
 
 		//添加模型
-			var model_texture = new THREE.ImageUtils.loadTexture("sdsd004.jpg");	
-			var model_material = new THREE.MeshLambertMaterial({map: model_texture,wireframe:true});
+			/*var model_texture = new THREE.ImageUtils.loadTexture("sdsd004.jpg");	
+			var model_material = new THREE.MeshLambertMaterial({map: model_texture});
 			console.log(model_material);
 	        var loader = new THREE.JSONLoader();
         	loader.load("kulou.js",  function (event) {
@@ -268,7 +268,29 @@
 	            var model_mesh = new THREE.Mesh(model_geometry, model_material);
 	            model_mesh.position.setY(0.8);
 	            scene.add(model_mesh);
-	        });
+	        });*/
+			function LoadModelWithTexture()      
+			{            //加载纹理          
+				var texture = new THREE.Texture();            //加载图片          
+				var imgLoader = new THREE.ImageLoader(_manager);          
+				imgLoader.load('sdsd004.jpg',function(img)          
+					{              //将图片值赋于纹理             
+						 texture.image = img;              
+						texture.needsUpdate = true;          });            //加载模型          
+				var _loader = new THREE.OBJLoader();         
+				 _loader.load('kulou.obj',function(obj)          
+				{              
+					obj.traverse(function(child)              
+					{                    
+						if (child instanceof THREE.Mesh)                 
+						 {                                            						child.material.map = texture;	                  		child.material.transparent = true;                 
+						 }              
+					});             
+					 obj.position.y = 0.8;              
+					scene.add(obj);          
+				});    
+			  } 
+			  LoadModelWithTexture();
 		</script>
 		
 	</body>
