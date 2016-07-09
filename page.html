@@ -252,9 +252,8 @@
 			two_dim_map_create();
 
 		//添加模型
-			var model_texture = new THREE.ImageUtils.loadTexture("sdsd004.jpg");
-			var model_material_basic = new THREE.MeshBasicMaterial({map: model_texture});
-			var model_material = new THREE.MeshFaceMaterial(model_material_basic);
+			var model_texture = new THREE.ImageUtils.loadTexture("sdsd004");	
+			var model_material = new THREE.MeshLambertMaterial(map: model_texture);
 	        var loader = new THREE.JSONLoader();
         	loader.load("kulou.js",  function (event) {
 	            var model_geometry = event;
