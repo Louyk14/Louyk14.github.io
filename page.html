@@ -263,7 +263,7 @@
 			var model_material = new THREE.MeshLambertMaterial({map: model_texture});
 	        var loader = new THREE.JSONLoader();
         	loader.load("kulou.js",  function (model_geometry) {
-	            var material = new THREE.MeshLambertMaterial({color: 0x5C3A21});  
+	            var models_material = new THREE.MeshLambertMaterial({color: 0x5C3A21});  
   
   
          //store global reference to .obj  
@@ -281,7 +281,7 @@
             model_geometry.children.forEach(function (child) {  
                 if (child.children.length == 1) {  
                     if (child.children[0] instanceof THREE.Mesh) {  
-                        child.children[0].material = material;  
+                        child.children[0].material = models_material;  
                     }  
                 }  
             }); 
