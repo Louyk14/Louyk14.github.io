@@ -253,13 +253,12 @@
 
 		//添加模型
 			var model_texture = new THREE.ImageUtils.loadTexture("sdsd004.jpg");
-			var model_material = new THREE.MeshLambertMaterial({map: model_texture});
+			var model_material = new THREE.MeshBasicMaterial({map: model_texture});
 	        var loader = new THREE.JSONLoader();
         	loader.load("kulou.js",  function (event) {
-        		console.log(event);
 	            var model_geometry = event;
 	            var model_mesh = new THREE.Mesh(model_geometry, model_material);
-	            model_mesh.position.setY(3);
+	            model_mesh.position.setY(1);
 	            scene.add(model_mesh);
 	        });
 		</script>
