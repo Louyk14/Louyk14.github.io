@@ -99,25 +99,25 @@
 
 	            if(e && e.keyCode==38)
 	            { // 上
-	                camera.positionx += direction.x;
-	                camera.positionz += direction.z;
+	                camera.position.x += direction.x;
+	                camera.position.z += direction.z;
 	            }
 	            if(e && e.keyCode==40)
 	            { //下
-	                camera.positionx -= direction.x;
-	                camera.positionz -= direction.z;
+	                camera.position.x -= direction.x;
+	                camera.position.z -= direction.z;
 	            }            
 	            if(e && e.keyCode==37)
 	            { // 左
 	            	direction.applyAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI / 2);
-	                camera.positionx += direction.x;
-	                camera.positionz += direction.z;
+	                camera.position.x += direction.x;
+	                camera.position.z += direction.z;
 	            }
 	            if(e && e.keyCode==39)
 	            { // 右
 	                direction.applyAxisAngle(new THREE.Vector3(0, 1, 0), -Math.PI / 2);
-	                camera.positionx += direction.x;
-	                camera.positionz += direction.z;
+	                camera.position.x += direction.x;
+	                camera.position.z += direction.z;
 	            }
 	            if(e && e.keyCode==32)
 	            { // 空格
