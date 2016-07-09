@@ -260,7 +260,7 @@
 
 		//添加模型
 			var model_texture = new THREE.ImageUtils.loadTexture("sdsd004.jpg");	
-			var model_material = new THREE.MeshLambertMaterial({map: model_texture;wireframe:true});
+			var model_material = new THREE.MeshLambertMaterial({map: model_texture,wireframe:true});
 			console.log(model_material);
 	        var loader = new THREE.JSONLoader();
         	loader.load("kulou.js",  function (event) {
