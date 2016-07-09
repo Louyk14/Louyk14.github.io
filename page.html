@@ -28,9 +28,9 @@
 			jump_dis.push(0);
 			jump_dis.push(0);
 
-			jump_dis[2] = 0.5 * g * (i + 1) * (i + 1);
-			jump_dis[1] = 0.5 * g * (i + 2) * (i + 2) - jump_dis[2];
-			jump_dis[0] = 0.5 * g * (i + 3) * (i + 3) - jump_dis[1];
+			jump_dis[2] = 0.5 * g;
+			jump_dis[1] = 0.5 * g * 4 - jump_dis[2];
+			jump_dis[0] = 0.5 * g * 9 - jump_dis[1];
 
 		//一些常量
 			var mapsize = 20;
