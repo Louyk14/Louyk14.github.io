@@ -253,8 +253,8 @@
 		//添加模型
 			var model_material = new THREE.MeshLambertMaterial( { color:0xffffff, side: THREE.DoubleSide } );
 	        var loader = new THREE.VTKLoader();
-        	loader.load("bunny.vtk",  function ( event ) {
-	            var model_geometry = event.content;
+        	loader.load("bunny.vtk",  function (geo) {
+	            var model_geometry = geo;
 	            console.log(event);
 	            var model_mesh = new THREE.Mesh( model_geometry, model_material );
 	            model_mesh.position.setY(4);
