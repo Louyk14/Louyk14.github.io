@@ -15,6 +15,23 @@
 		var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
 		scene.add(cubeCamera);
 
+		//重力相关
+			var jump_up_time = 2;
+			var g = 9.8;
+			var jumping_time = [];
+			var isJumping = [];
+			var jump_dis = [];
+			jumping_time.push(0);
+			isJumping.push(false);
+
+			jump_dis.push(0);
+			jump_dis.push(0);
+			jump_dis.push(0);
+
+			jump_dis[2] = 0.5 * g * (i + 1) * (i + 1);
+			jump_dis[1] = 0.5 * g * (i + 2) * (i + 2) - jump_dis[2];
+			jump_dis[0] = 0.5 * g * (i + 3) * (i + 3) - jump_dis[1];
+
 		//一些常量
 			var mapsize = 20;
 			var cube_side_length = 1;
@@ -49,30 +66,37 @@
 			document.body.appendChild(renderer.domElement);
 			
 			document.onkeydown=function(event){
-				console.log("event", event);
 	            var e = event || window.event || arguments.callee.caller.arguments[0];
 	            var direction = camera.getWorldDirection();
 	            direction.multiplyScalar(camera_step);
 
 	            if(e && e.keyCode==38)
 	            { // 上
-	                camera.position.x += direction.x;
-	                camera.position.z += direction.z;
+	                camera.translateX(direction.x);
+	                camera.translateZ(direction.z);
 	            }
 	            if(e && e.keyCode==40)
 	            { //下
-	                camera.position.x -= direction.x;
-	                camera.position.z -= direction.z;   
+	                camera.translateX(-1 * direction.x);
+	                camera.translateZ(-1 * direction.z);   
 	            }            
 	            if(e && e.keyCode==37)
 	            { // 左
-	                camera.position.x += direction.z;
-	                camera.position.z -= direction.x;
+	                camera.translateZ(-1 * direction.x);
+	                camera.translateX(direction.z);
 	            }
 	            if(e && e.keyCode==39)
 	            { // 右
-	               camera.position.x -= direction.z;
-	                camera.position.z += direction.x;
+	                camera.translateX(-1 * direction.z);
+	                camera.translateZ(direction.x);
+	            }
+	            if(e && e.keyCode==32)
+	            { // 空格
+	                if(isJumping[0] == false)
+	                {
+	                	jumping_time[0] = 0;
+	                	isJumping[0] = true;
+	                }
 	            }
 	         };
 
@@ -131,6 +155,24 @@
 			var render = function () {
 				//cubeCamera.position.copy(cube.position);
 				//cubeCamera.updateCubeMap(renderer, scene);
+				if(isJumping[0] == true)
+				{
+					if(jumping_time[0] <= 2)
+					{
+						camera.translateY(jump_dis[jumping_time[0]]);
+					}
+					else
+					{
+						camera.translateY(-1 * jump_dis[5 - jumping_time[0]]);
+					}
+					jumping_time++;
+					
+					if(jumping_time[0] >= 6)
+					{
+						isJumping[0] = false;
+						jumping_time[0] = 0;
+					}
+				}
 				camera.rotation.y += (0.01 * mousepos);
 				if(Math.abs(Math.abs(camera.rotation.y) - 6.28) <= 0.005)
 				{
