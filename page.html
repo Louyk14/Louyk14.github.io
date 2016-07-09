@@ -96,29 +96,28 @@
 	            var e = event || window.event || arguments.callee.caller.arguments[0];
 	            var direction = camera.getWorldDirection();
 	            direction.multiplyScalar(camera_step);
-	            console.log(direction);
 
 	            if(e && e.keyCode==38)
 	            { // 上
-	                camera.translateX(direction.x);
-	                camera.translateZ(direction.z);
+	                camera.positionx += direction.x;
+	                camera.positionz += direction.z;
 	            }
 	            if(e && e.keyCode==40)
 	            { //下
-	                camera.translateX(-1 * direction.x);
-	                camera.translateZ(-1 * direction.z);   
+	                camera.positionx -= direction.x;
+	                camera.positionz -= direction.z;
 	            }            
 	            if(e && e.keyCode==37)
 	            { // 左
-	            	direction.applyAxisAngle(new THREE.Vector3(0, 1, 0), -Math.PI / 2);
-	                camera.translateX(direction.x);
-	                camera.translateZ(direction.z);
+	            	direction.applyAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI / 2);
+	                camera.positionx += direction.x;
+	                camera.positionz += direction.z;
 	            }
 	            if(e && e.keyCode==39)
 	            { // 右
-	                direction.applyAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI / 2);
-	                camera.translateX(direction.x);
-	                camera.translateZ(direction.z);
+	                direction.applyAxisAngle(new THREE.Vector3(0, 1, 0), -Math.PI / 2);
+	                camera.positionx += direction.x;
+	                camera.positionz += direction.z;
 	            }
 	            if(e && e.keyCode==32)
 	            { // 空格
