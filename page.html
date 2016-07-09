@@ -11,6 +11,7 @@
 		<script src="VTKLoader.js"></script>
 		<script src="OBJLoader.js"></script>
 		<script src="JSONLoader.js"></script>
+		<script src="ImageLoader.js"></script>
 		<script>
 		var scene = new THREE.Scene();
 		var cubeCamera = new THREE.CubeCamera( 1, 100000, 128 );
@@ -271,8 +272,12 @@
 	        });*/
 			function LoadModelWithTexture()      
 			{            //加载纹理          
-				var texture = new THREE.ImageUtils.loadTexture("sdsd004.jpg");           
-				texture.needsUpdate = true;         
+				var texture = new THREE.Texture();            //加载图片          
+				var imgLoader = new THREE.ImageLoader();          
+				imgLoader.load('sdsd004.jpg',function(img)          
+					{              //将图片值赋于纹理             
+						 texture.image = img;              
+						texture.needsUpdate = true;          });            //加载模型          
 				var _loader = new THREE.OBJLoader();         
 				 _loader.load('kulou.obj',function(obj)          
 				{              
@@ -282,7 +287,8 @@
 						 {                                            						child.material.map = texture;	                  		child.material.transparent = true;                 
 						 }              
 					});             
-					 obj.position.y = 0.8;              
+					 obj.position.y = 0.8;   
+					 obj.scale.set(0.5, 0.5, 0.5);           
 					scene.add(obj);          
 				});    
 			  } 
