@@ -96,6 +96,7 @@
 	            var e = event || window.event || arguments.callee.caller.arguments[0];
 	            var direction = camera.getWorldDirection();
 	            direction.multiplyScalar(camera_step);
+	            console.log(direction);
 
 	            if(e && e.keyCode==38)
 	            { // 上
@@ -109,13 +110,13 @@
 	            }            
 	            if(e && e.keyCode==37)
 	            { // 左
-	            	direction.applyAxisAngle(new Vector3(0, 1, 0), -Math.PI / 2);
+	            	direction.applyAxisAngle(new THREE.Vector3(0, 1, 0), -Math.PI / 2);
 	                camera.translateZ(direction.x);
 	                camera.translateX(direction.z);
 	            }
 	            if(e && e.keyCode==39)
 	            { // 右
-	                direction.applyAxisAngle(new Vector3(0, 1, 0), Math.PI / 2);
+	                direction.applyAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI / 2);
 	                camera.translateX(-1 * direction.z);
 	                camera.translateZ(direction.x);
 	            }
