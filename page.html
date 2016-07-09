@@ -17,7 +17,7 @@
 
 		//重力相关
 			var jump_up_time = 99;
-			var g = 0.000098;
+			var g = 0.000049;
 			var jumping_time = [];
 			var isJumping = [];
 			var jump_dis = [];
@@ -63,7 +63,7 @@
 			var mapsize = 20;
 			var cube_side_length = 1;
 			var cubes = [];
-			var camera_step = 0.5;
+			var camera_step = 0.05;
 
 		//图片、材料设置
 			var grassmap = "grass.jpg";
@@ -109,17 +109,18 @@
 	            }            
 	            if(e && e.keyCode==37)
 	            { // 左
-	                camera.translateZ(-1 * direction.x);
+	            	direction.applyAxisAngle(new Vector3(0, 1, 0), -Math.PI / 2);
+	                camera.translateZ(direction.x);
 	                camera.translateX(direction.z);
 	            }
 	            if(e && e.keyCode==39)
 	            { // 右
+	                direction.applyAxisAngle(new Vector3(0, 1, 0), Math.PI / 2);
 	                camera.translateX(-1 * direction.z);
 	                camera.translateZ(direction.x);
 	            }
 	            if(e && e.keyCode==32)
 	            { // 空格
-	            	console.log("jump");
 	                if(isJumping[0] == false)
 	                {
 	                	jumping_time[0] = 0;
