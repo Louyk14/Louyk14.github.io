@@ -226,6 +226,8 @@
 			render();
 
 		//2D地图
+			var two_dim_map_list = [];
+
 			function two_dim_map_create()
 			{
 				for(var i = 0; i < 20; i++)
@@ -233,13 +235,18 @@
 					for(var j = 0; j < 20; j++)
 					{
 						var newDiv = document.createElement("div");
-						newDiv.className = "mapgrid_style";
-						newDiv.position = 'absolute';
+						var newSpan = document.createElement("span");
+						newSpan.innerHTML = "0";
+						newSpan.style.cssText = "font-size:8px";
+						newDiv.appendChild(newSpan);
 						newDiv.style.cssText = "width: 10px;height: 10px;border: 1px solid black;position: absolute;left:" + i * 10 + "px;top: " + j * 10 + "px;margin: 0px;padding: 0px;";
 						document.body.appendChild(newDiv);
+						two_dim_map_list.push(newSpan);
 					}
 				}
 			}
+
+			console.log(two_dim_map_list);
 
 			two_dim_map_create();
 		</script>
