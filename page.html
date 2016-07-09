@@ -271,12 +271,8 @@
 	        });*/
 			function LoadModelWithTexture()      
 			{            //加载纹理          
-				var texture = new THREE.Texture();            //加载图片          
-				var imgLoader = new THREE.ImageLoader(_manager);          
-				imgLoader.load('sdsd004.jpg',function(img)          
-					{              //将图片值赋于纹理             
-						 texture.image = img;              
-						texture.needsUpdate = true;          });            //加载模型          
+				var texture = new THREE.ImageUtils.loadTexture("sdsd004.jpg");           
+				texture.needsUpdate = true;         
 				var _loader = new THREE.OBJLoader();         
 				 _loader.load('kulou.obj',function(obj)          
 				{              
