@@ -316,7 +316,7 @@
 					var globalVertex = localVertex.applyMatrix4(myobject.matrix);
 					var directionVector = globalVertex.sub(myobject.position);
 
-					var ray = new THREE.Raycaster(myPoint, directionVector.clone.normalize());
+					var ray = new THREE.Raycaster(myPoint, directionVector.clone().normalize());
 					var collisionResults = ray.intersectObjects(otherobject);
 
 					if(collisionResults.length > 0 && collisionResults[0].distance < directionVector.length())
