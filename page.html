@@ -312,7 +312,7 @@
 				var myPoint = myobject.position.clone();
 				for(var i = 0; i < myobject.geometry.vertices.length; i++)
 				{
-					var localVertex = myobject.vertices[i].clone();
+					var localVertex = myobject.geometry.vertices[i].clone();
 					var globalVertex = localVertex.applyMatrix4(myobject.matrix);
 					var directionVector = globalVertex.sub(myobject.position);
 
