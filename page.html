@@ -16,7 +16,7 @@
 		var scene = new THREE.Scene();
 		var cubeCamera = new THREE.CubeCamera( 1, 100000, 128 );
 		var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
-		scene.add(cubeCamera);
+		//scene.add(cubeCamera);
 
 		var movedirection = 0;  
 
@@ -267,6 +267,9 @@
         	loader.load("kulou.js",  function (event) {
 	            var model_geometry = event;
 	            var model_mesh = new THREE.Mesh(model_geometry, model_material);
+	            model_mesh.position.setY(0.8);
+	            scene.add(model_mesh);
+	            model_mesh.position.setX(3);
 	            model_mesh.position.setY(0.8);
 	            scene.add(model_mesh);
 	        });
