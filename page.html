@@ -114,7 +114,10 @@
 	            var model_geometry = event;
 	            var model_mesh = new THREE.Mesh(model_geometry, model_material);
 	            person_model = model_mesh;
+	            console.log(person_model, model_mesh);
 	        });
+
+	        console.log(person_model);
 
 	        var enemy_model = person_model.clone();
 
