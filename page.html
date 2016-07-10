@@ -17,8 +17,7 @@
 		var cubeCamera = new THREE.CubeCamera( 1, 100000, 128 );
 		var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000); 
 
-		scene.add(camera);
-		//scene.add(cubeCamera);
+		scene.add(cubeCamera);
 
 		var movedirection = 0;  
 
@@ -57,10 +56,12 @@
 					if(jumping_time[0] <= jump_up_time)
 					{
 						person_model.translateY(jump_dis[jumping_time[0]]);
+						camera.translateY(jump_dis[jumping_time[0]]);
 					}
 					else
 					{
 						person_model.translateY(-1 * jump_dis[2 * jump_up_time + 1 - jumping_time[0]]);
+						camera.translateY(-1 * jump_dis[2 * jump_up_time + 1 - jumping_time[0]]);
 					}
 					jumping_time[0]++;
 					
@@ -118,20 +119,16 @@
 	            enemy_model = person_model.clone();
 
 		        person_model.position.setY(0.8);
+		        person_model.lookAt(new THREE.Vector3(0, 0, 1));
 		        enemy_model.position.setY(0.8);
 		        enemy_model.position.setX(5);
+
+		        camera.position.setY(0.8 + person_model.height);
+		        camera.position.setZ(0, 0, 0.2);
 
 		        scene.add(person_model);
 		        scene.add(enemy_model);
 	        });
-
-	        camera.targetMesh = person_model;
-	        camera.distanceAbove = 2;
-	        camera.distanceBehind = 3;
-	        camera.movementSpeed = 0.1;
-	        camera.autoForward = true;
-	        camera.autoBackward = true;
-	        camera.lookSpeed =  0.1;
 	    //
 			var renderer = new THREE.WebGLRenderer();
 			renderer.setSize( window.innerWidth, window.innerHeight );
@@ -237,28 +234,38 @@
 					{
 						person_model.position.x += direction.x;
 		                person_model.position.z += direction.z;
+		                camera.position.x += direction.x;
+		                camera.position.z += direction.z;
 					}
 					else if(movedirection == 2)
 					{
 						person_model.position.x -= direction.x;
 		                person_model.position.z -= direction.z;
+		                camera.position.x -= direction.x;
+		                camera.position.z -= direction.z;
 					}
 					else if(movedirection == 3)
 					{
 						direction.applyAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI / 2);
 		                person_model.position.x += direction.x;
 		                person_model.position.z += direction.z;
+		                camera.position.x += direction.x;
+		                camera.position.z += direction.z;
 					}
 					else if(movedirection == 4)
 					{
 						direction.applyAxisAngle(new THREE.Vector3(0, 1, 0), -Math.PI / 2);
 		                person_model.position.x += direction.x;
 		                person_model.position.z += direction.z;
+		                camera.position.x += direction.x;
+		                camera.position.z += direction.z;
 					}
 					person_model.rotation.y += (0.01 * mousepos);
+					camera.rotation.y += (0.01 * mousepos);
 					if(Math.abs(Math.abs(person_model.rotation.y) - 6.28) <= 0.005)
 					{
 						person_model.rotation.y = 0;
+						camera.rotation.y = 0;
 					}
 				}
 
