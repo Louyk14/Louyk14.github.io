@@ -136,7 +136,7 @@
 
 	        var weapon_loader = new THREE.OBJLoader();
 
-	        weapon_loader.load("weapon.obj", function(obj)) {
+	        weapon_loader.load("weapon.obj", function(obj) {
 	        	var weapon_geometry = obj;
 	        	var weapon_mesh = new THREE.Mesh(weapon_geometry, weapon_material);
 	        	weapon_mesh.position.setY(1);
