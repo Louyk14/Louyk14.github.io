@@ -223,9 +223,12 @@
 				//cubeperson_model.position.copy(cube.position);
 				//cubeperson_model.updateCubeMap(renderer, scene);
 				
-				var direction = person_model.getWorldDirection();
-	            direction.multiplyScalar(camera_step);
-
+				if(person_model != null)
+				{
+					var direction = person_model.getWorldDirection();
+	            	direction.multiplyScalar(camera_step);
+				}
+				
 				if(movedirection == 1)
 				{
 					person_model.position.x += direction.x;
