@@ -15,7 +15,9 @@
 		<script>
 		var scene = new THREE.Scene();
 		var cubeCamera = new THREE.CubeCamera( 1, 100000, 128 );
-		var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+		var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000); 
+
+		scene.add(camera);
 		//scene.add(cubeCamera);
 
 		var movedirection = 0;  
@@ -54,11 +56,11 @@
 				{
 					if(jumping_time[0] <= jump_up_time)
 					{
-						camera.translateY(jump_dis[jumping_time[0]]);
+						person_model.translateY(jump_dis[jumping_time[0]]);
 					}
 					else
 					{
-						camera.translateY(-1 * jump_dis[2 * jump_up_time + 1 - jumping_time[0]]);
+						person_model.translateY(-1 * jump_dis[2 * jump_up_time + 1 - jumping_time[0]]);
 					}
 					jumping_time[0]++;
 					
@@ -100,7 +102,32 @@
 			skybox = new THREE.Mesh(skyboxGeom, skyboxMaterial);
 			scene.add(skybox);
 
+		//添加模型
+			var model_texture = new THREE.ImageUtils.loadTexture("sdsd004.jpg");	
+			var model_material = new THREE.MeshLambertMaterial({map: model_texture});
+			
+	        var loader = new THREE.JSONLoader();
+	        
+	        var person_model = null;
+        	
+        	loader.load("kulou.js",  function (event) {
+	            var model_geometry = event;
+	            var model_mesh = new THREE.Mesh(model_geometry, model_material);
+	            person_model = model_mesh;
+	        });
 
+	        var enemy_model = person_model.clone();
+
+	        person_model.position.setY(0.8);
+	        enemy_model.position.setY(0.8);
+	        enemy_model.position.setX(5);
+
+	        scene.add(person_model);
+	        scene.add(enemy_model);
+
+	        camera.targetMesh = person_model;
+	        camera.distanceAbove = 2;
+	    //
 			var renderer = new THREE.WebGLRenderer();
 			renderer.setSize( window.innerWidth, window.innerHeight );
 			document.body.appendChild(renderer.domElement);
@@ -171,9 +198,9 @@
 
          	init();
 
-			camera.position.z = 0;
-			camera.position.y = 1;
-			camera.position.x = 0;
+			person_model.position.z = 0;
+			person_model.position.y = 1;
+			person_model.position.x = 0;
 
 			var mousepos = 0;
 
@@ -183,12 +210,12 @@
 	        	if((e.screenX - (screen.width / 2)) > 150)
 	        	{
 	        		mousepos = -1;
-	        		//camera.rotation.y -= 0.01;
+	        		//person_model.rotation.y -= 0.01;
 	        	}	
 	        	else if((e.screenX - (screen.width / 2)) < -150)
 	        	{
 	        		mousepos = 1;
-	        		//camera.rotation.y += 0.01;
+	        		//person_model.rotation.y += 0.01;
 	        	}     
 	        	else
 	        	{
@@ -197,38 +224,38 @@
 	        }
 
 			var render = function () {
-				//cubeCamera.position.copy(cube.position);
-				//cubeCamera.updateCubeMap(renderer, scene);
+				//cubeperson_model.position.copy(cube.position);
+				//cubeperson_model.updateCubeMap(renderer, scene);
 				
-				var direction = camera.getWorldDirection();
+				var direction = person_model.getWorldDirection();
 	            direction.multiplyScalar(camera_step);
 
 				if(movedirection == 1)
 				{
-					camera.position.x += direction.x;
-	                camera.position.z += direction.z;
+					person_model.position.x += direction.x;
+	                person_model.position.z += direction.z;
 				}
 				else if(movedirection == 2)
 				{
-					camera.position.x -= direction.x;
-	                camera.position.z -= direction.z;
+					person_model.position.x -= direction.x;
+	                person_model.position.z -= direction.z;
 				}
 				else if(movedirection == 3)
 				{
 					direction.applyAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI / 2);
-	                camera.position.x += direction.x;
-	                camera.position.z += direction.z;
+	                person_model.position.x += direction.x;
+	                person_model.position.z += direction.z;
 				}
 				else if(movedirection == 4)
 				{
 					direction.applyAxisAngle(new THREE.Vector3(0, 1, 0), -Math.PI / 2);
-	                camera.position.x += direction.x;
-	                camera.position.z += direction.z;
+	                person_model.position.x += direction.x;
+	                person_model.position.z += direction.z;
 				}
-				camera.rotation.y += (0.01 * mousepos);
-				if(Math.abs(Math.abs(camera.rotation.y) - 6.28) <= 0.005)
+				person_model.rotation.y += (0.01 * mousepos);
+				if(Math.abs(Math.abs(person_modrotation.y) - 6.28) <= 0.005)
 				{
-					camera.rotation.y = 0;
+					person_model.rotation.y = 0;
 				}
 				requestAnimationFrame(render);
 				renderer.render(scene, camera);
@@ -259,20 +286,7 @@
 			
 			two_dim_map_create();
 
-		//添加模型
-			var model_texture = new THREE.ImageUtils.loadTexture("sdsd004.jpg");	
-			var model_material = new THREE.MeshLambertMaterial({map: model_texture});
-			console.log(model_material);
-	        var loader = new THREE.JSONLoader();
-        	loader.load("kulou.js",  function (event) {
-	            var model_geometry = event;
-	            var model_mesh = new THREE.Mesh(model_geometry, model_material);
-	            model_mesh.position.setY(0.8);
-	            scene.add(model_mesh);
-	            model_mesh.position.setX(3);
-	            model_mesh.position.setY(0.8);
-	            scene.add(model_mesh);
-	        });
+
 		</script>
 		
 	</body>
