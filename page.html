@@ -258,6 +258,8 @@
                 }       
 
                 mouseuppos = -1 * ((e.clientY - document.body.clientHeight / 2) / (document.body.clientHeight / 2)) * Math.PI / 3;
+
+                console.log(camera.getWorldDirection());
             }
 
 
@@ -310,7 +312,6 @@
 					new_dir.z = Math.cos(mouseuppos) * origin_dir.z;
 					new_dir.y = Math.sin(mouseuppos);
 					camera.lookAt(camera.position + new_dir);
-					console.log(origin_dir, camera.position, new_dir, mouseuppos);
 
 					if(Math.abs(Math.abs(person_model.rotation.y) - 6.28) <= 0.005)
 					{
