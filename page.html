@@ -124,7 +124,7 @@
 
 		        camera.position.setY(1.1);
 		        camera.position.setX(0);
-		        camera.position.setZ(-0.1);
+		        camera.position.setZ(-0.5);
 		        camera.lookAt(new THREE.Vector3(0, 1.1, 1));
 
 		        scene.add(person_model);
@@ -201,26 +201,27 @@
 
          	init();	
 
-			var mousepos = 0;
+         	var mousepos = 0;
+  
+            document.getElementById('wf').onmousemove = function mouseMoveActor(event)
+            {
+                var e = event || window.event;
+                if((e.screenX - (screen.width / 2)) > 150)
+                {
+                    mousepos = -1;
+                    //person_model.rotation.y -= 0.01;
+                }    
+                else if((e.screenX - (screen.width / 2)) < -150)
+                {
+                    mousepos = 1;
+                    //person_model.rotation.y += 0.01;
+                }     
+                else
+                {
+                    mousepos = 0;
+                }       
+            }
 
-			document.getElementById('wf').onmousemove = function mouseMoveActor(event)
-	        {
-	        	var e = event || window.event;
-	        	if((e.screenX - (screen.width / 2)) > 150)
-	        	{
-	        		mousepos = -1;
-	        		//person_model.rotation.y -= 0.01;
-	        	}	
-	        	else if((e.screenX - (screen.width / 2)) < -150)
-	        	{
-	        		mousepos = 1;
-	        		//person_model.rotation.y += 0.01;
-	        	}     
-	        	else
-	        	{
-	        		mousepos = 0;
-	        	}   	
-	        }
 
 			var render = function () {
 				//cubeperson_model.position.copy(cube.position);
@@ -299,6 +300,29 @@
 			}
 			
 			two_dim_map_create();
+
+		//碰撞检测
+			function isCrashed()
+			{
+				var myobject = [person_model];//arguments[0];
+				var otherobject = [enemy_model];//arguments[1];
+
+				var myPoint = myobject.position.clone();
+				for(var i = 0; i < myobject.geometry.vertices.length; i++)
+				{
+					var localVertex = myobject.vertices[i].clone();
+					var globalVertex = localVertex,applyMatrix4(myobject.matrix);
+					var directionVector = globalVertex.sub(myobject.position);
+
+					var ray = new THREE.Raycaster(myPoint, directionVector.clone.normalize());
+					var collisionResults = ray.intersectObjects(otherobject);
+
+					if(collisionResults.length > 0 && collisionResults[0].distance < directionVector.length())
+					{
+						return true;
+					}
+				}
+			}
 		</script>
 		
 	</body>
