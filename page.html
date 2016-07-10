@@ -123,6 +123,8 @@
 
 		        scene.add(person_model);
 		        scene.add(enemy_model);
+
+		        console.log(person_model);
 	        });
 
 	        camera.targetMesh = person_model;
@@ -227,34 +229,34 @@
 				{
 					var direction = person_model.getWorldDirection();
 	            	direction.multiplyScalar(camera_step);
-				}
-				
-				if(movedirection == 1)
-				{
-					person_model.position.x += direction.x;
-	                person_model.position.z += direction.z;
-				}
-				else if(movedirection == 2)
-				{
-					person_model.position.x -= direction.x;
-	                person_model.position.z -= direction.z;
-				}
-				else if(movedirection == 3)
-				{
-					direction.applyAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI / 2);
-	                person_model.position.x += direction.x;
-	                person_model.position.z += direction.z;
-				}
-				else if(movedirection == 4)
-				{
-					direction.applyAxisAngle(new THREE.Vector3(0, 1, 0), -Math.PI / 2);
-	                person_model.position.x += direction.x;
-	                person_model.position.z += direction.z;
-				}
-				person_model.rotation.y += (0.01 * mousepos);
-				if(Math.abs(Math.abs(person_modrotation.y) - 6.28) <= 0.005)
-				{
-					person_model.rotation.y = 0;
+					
+					if(movedirection == 1)
+					{
+						person_model.position.x += direction.x;
+		                person_model.position.z += direction.z;
+					}
+					else if(movedirection == 2)
+					{
+						person_model.position.x -= direction.x;
+		                person_model.position.z -= direction.z;
+					}
+					else if(movedirection == 3)
+					{
+						direction.applyAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI / 2);
+		                person_model.position.x += direction.x;
+		                person_model.position.z += direction.z;
+					}
+					else if(movedirection == 4)
+					{
+						direction.applyAxisAngle(new THREE.Vector3(0, 1, 0), -Math.PI / 2);
+		                person_model.position.x += direction.x;
+		                person_model.position.z += direction.z;
+					}
+					person_model.rotation.y += (0.01 * mousepos);
+					if(Math.abs(Math.abs(person_modrotation.y) - 6.28) <= 0.005)
+					{
+						person_model.rotation.y = 0;
+					}
 				}
 				requestAnimationFrame(render);
 				renderer.render(scene, camera);
@@ -285,7 +287,7 @@
 			
 			two_dim_map_create();
 
-
+			console.log("finished");
 		</script>
 		
 	</body>
