@@ -123,9 +123,9 @@
 		        enemy_model.position.setY(0.8);
 		        enemy_model.position.setX(5);
 
-		        camera.position.setY(3);
+		        camera.position.setY(1.5);
 		        camera.position.setX(0);
-		        camera.position.setZ(1);
+		        camera.position.setZ(0);
 
 		        console.log(person_model);
 
@@ -263,10 +263,7 @@
 		                camera.position.x += direction.x;
 		                camera.position.z += direction.z;
 					}
-					else
-					{
-						console.log("stable");
-					}
+					
 					person_model.rotation.y += (0.01 * mousepos);
 					camera.rotation.y += (0.01 * mousepos);
 					if(Math.abs(Math.abs(person_model.rotation.y) - 6.28) <= 0.005)
