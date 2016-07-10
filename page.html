@@ -316,7 +316,9 @@
 					new_dir.x = Math.cos(mouseuppos) * origin_dir.x;
 					new_dir.z = Math.cos(mouseuppos) * origin_dir.z;
 					new_dir.y = Math.sin(mouseuppos);
-					camera.lookAt(new_dir);					
+					camera.lookAt(camera.position + new_dir);	
+
+					console.log(camera.getWorldDirection());				
 				}
 
 				for(var i = 0; i < bullets.length; i++)
