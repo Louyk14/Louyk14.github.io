@@ -131,18 +131,39 @@
 		        scene.add(enemy_model);
 	        });
 
-	        var weapon_material = new THREE.MeshLambertMaterial({color:0x000000});
-	        var weapon_model = null;
+	    //子弹
+	    	var bulletnum = 10;
+	    	var bullets = [];
+	    	var direct = [];
+	      
+	    //鼠标事件
+	    	document.getElementById('wf').onmousedown(function(e){
+	    		if(e.button == 0)
+	    		{
+	    			//开火
+	    			var bullet = new THREE.Mesh(new THREE.SphereGeometry(0.1, 0.1), new THREE.MeshLambertMaterial({color:oxff0000}));
+	    			bullet.position.set(person_model.position);
+	    			scene.add(bullet);
+	    			bullets.add(bullet);
 
-	        var weapon_loader = new THREE.OBJLoader();
+	    			var projector = new THREE.Projector();
+	    			
+	    			var mouse3D = new THREE.Vector3(0, 0, 0);
+	    			mouse3D.x = (e.clientX / window.innerWidth) * 2 - 1;
+	    			mouse3D.y = -(e.clentY / window.innerHeight) * 2 + 1;
+	    			mouse3D.z = 0.5;
 
-	        weapon_loader.load("weapon.obj", function(obj) {
-	        	var weapon_geometry = obj;
-	        	var weapon_mesh = new THREE.Mesh(weapon_geometry, weapon_material);
-	        	weapon_mesh.position.setY(1);
-	        	weapon_mesh.position.setZ(5);
-	        	scene.add(weapon_mesh);
-	        });
+	    			projector.unprojectVector(mouse3D, camera);
+	    			var mouse_ray = new THREE.Ray(camera.position, mouse3D.subSelf(camera.position).normalize());
+
+	    			console.log(mouse_ray.direction);
+	    			direct.push(mouse_ray.direction);
+	    		}
+	    		else if(e.button == 2)
+	    		{
+	    			//挖
+	    		}
+	    	});
 
 	    //
 			var renderer = new THREE.WebGLRenderer();
@@ -216,6 +237,7 @@
          	init();	
 
          	var mousepos = 0;
+         	var mouseuppos = 0;
   
             document.getElementById('wf').onmousemove = function mouseMoveActor(event)
             {
@@ -234,6 +256,8 @@
                 {
                     mousepos = 0;
                 }       
+
+                mouseuppos = ((e.clientY - document.body.clientHeight / 2) / (document.body.clientHeight / 2)) * Math.PI / 2;
             }
 
 
@@ -279,11 +303,28 @@
 					
 					person_model.rotation.y += (0.01 * mousepos);
 					camera.rotation.y -= (0.01 * mousepos);
+					camera.rotation.x = mouseuppos;
 					if(Math.abs(Math.abs(person_model.rotation.y) - 6.28) <= 0.005)
 					{
 						person_model.rotation.y = 0;
 						camera.rotation.y = 0;
 					}
+				}
+
+				for(var i = 0; i < bullets.length; i++)
+				{
+					if(bullet[i].position.x >= 30 || bullet[i].position.y >= 30
+						|| bullet[i].position.z >= 30)
+					{
+						bullet.shift();
+						bullets.shift();
+					}
+				}
+				for(var i = 0; i < bullets.length; i++)
+				{
+					bullet[i].translateX(bullets[i].x);
+					bullet[i].translateY(bullets[i].y);
+					bullet[i].translateZ(bullets[i].z);
 				}
 
 				requestAnimationFrame(render);
