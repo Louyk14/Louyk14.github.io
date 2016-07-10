@@ -311,7 +311,7 @@
 				for(var i = 0; i < myobject.geometry.vertices.length; i++)
 				{
 					var localVertex = myobject.vertices[i].clone();
-					var globalVertex = localVertex,applyMatrix4(myobject.matrix);
+					var globalVertex = localVertex.applyMatrix4(myobject.matrix);
 					var directionVector = globalVertex.sub(myobject.position);
 
 					var ray = new THREE.Raycaster(myPoint, directionVector.clone.normalize());
