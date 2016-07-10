@@ -257,8 +257,7 @@
                     mousepos = 0;
                 }       
 
-                mouseuppos = ((e.clientY - document.body.clientHeight / 2) / (document.body.clientHeight / 2)) * Math.PI / 3;
-                console.log(e.clientY, mouseuppos, document.body.clientHeight / 2);
+                mouseuppos = -1 * ((e.clientY - document.body.clientHeight / 2) / (document.body.clientHeight / 2)) * Math.PI / 3;
             }
 
 
@@ -304,7 +303,7 @@
 					
 					person_model.rotation.y += (0.01 * mousepos);
 					camera.rotation.y -= (0.01 * mousepos);
-					camera.rotation.z = mouseuppos;
+					camera.rotation.z = 0;//mouseuppos;
 					if(Math.abs(Math.abs(person_model.rotation.y) - 6.28) <= 0.005)
 					{
 						person_model.rotation.y = 0;
