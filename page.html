@@ -263,7 +263,7 @@
 					}
 					
 					person_model.rotation.y += (0.01 * mousepos);
-					camera.rotation.y += (0.01 * mousepos);
+					camera.rotation.y -= (0.01 * mousepos);
 					if(Math.abs(Math.abs(person_model.rotation.y) - 6.28) <= 0.005)
 					{
 						person_model.rotation.y = 0;
