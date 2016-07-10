@@ -303,7 +303,14 @@
 					
 					person_model.rotation.y += (0.01 * mousepos);
 					camera.rotation.y -= (0.01 * mousepos);
-					camera.rotation.x = Math.PI + mouseuppos;
+					
+					var origin_dir = camera.getWorldDirection();
+					var new_dir = new THREE.Vector3(0, 0, 0);
+					new_dir.x = Math.cos(mouseuppos) * origin_dir.x;
+					new_dir.z = Math.cos(mouseuppos) * origin_dir.z;
+					new_dir.y = Math.sin(mouseuppos);
+					camera.lookAt(camera.position + new_dir);
+
 					if(Math.abs(Math.abs(person_model.rotation.y) - 6.28) <= 0.005)
 					{
 						person_model.rotation.y = 0;
