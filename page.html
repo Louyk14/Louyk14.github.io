@@ -123,12 +123,15 @@
 
 		        scene.add(person_model);
 		        scene.add(enemy_model);
-
-		        console.log(person_model);
 	        });
 
 	        camera.targetMesh = person_model;
 	        camera.distanceAbove = 2;
+	        camera.distanceBehind = 3;
+	        camera.movementSpeed = 0.1;
+	        camera.autoForward = true;
+	        camera.autoBackward = true;
+	        camera.lookSpeed =  0.1;
 	    //
 			var renderer = new THREE.WebGLRenderer();
 			renderer.setSize( window.innerWidth, window.innerHeight );
@@ -253,11 +256,14 @@
 		                person_model.position.z += direction.z;
 					}
 					person_model.rotation.y += (0.01 * mousepos);
-					if(Math.abs(Math.abs(person_modrotation.y) - 6.28) <= 0.005)
+					if(Math.abs(Math.abs(person_model.rotation.y) - 6.28) <= 0.005)
 					{
 						person_model.rotation.y = 0;
 					}
 				}
+
+				console.log(person_model.position);
+
 				requestAnimationFrame(render);
 				renderer.render(scene, camera);
 			};
@@ -286,8 +292,6 @@
 			}
 			
 			two_dim_map_create();
-
-			console.log("finished");
 		</script>
 		
 	</body>
