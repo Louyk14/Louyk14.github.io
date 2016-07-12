@@ -19,13 +19,6 @@
 				display: none;
 			}
 
-			#heropointer{
-				width: 10px;
-				height:10px;
-				position: absolute;	
-				display: none;
-			}
-
 			#leftpoint{
 				width: 150px;
 				height: 20px;
@@ -119,7 +112,6 @@
 	</head>
 	<body id="wf">
 		<div id="leftpoint"><h5>left:0</h5></div>
-		<img id="heropointer" src="pointer.jpg">
 		<div id="heropoint"></div>
 		<div id="hp_bar"></div>
 		<input type="button" id="backbutton" value ="返回" />
@@ -708,8 +700,7 @@
 		    				clearScene();
 		    				isGameOver = true;
 		    				$('.grids').remove();
-							$('#heropoint').hide();	
-							$('#heropointer').hide();					
+							$('#heropoint').hide();					
 							$('#hp_bar').hide();
 							$('#winpage').show();
 							$('#leftpoint').hide();
@@ -750,8 +741,7 @@
 						clearScene();
 						isGameOver = true;
 						$('.grids').remove();
-						$('#heropoint').hide();	
-						$('#heropointer').hide();					
+						$('#heropoint').hide();						
 						$('#hp_bar').hide();
 						$('#endpage').show();
 						$('#leftpoint').hide();
@@ -1594,7 +1584,6 @@
 					$('#leftpoint').show();
 					$('#backbutton').show();	
 					$('#heropoint').show();
-					$('#heropointer').show();	
 					$('#hp_bar').show();	
 					$('#hp_bar').css('width', document.body.clientWidth);	
 					isGameOver = false;
@@ -1615,8 +1604,7 @@
 					document.getElementById('startpage').style.display = 'block';
 					isGameOver = true;
 					$('.grids').remove();
-					$('#heropoint').hide();
-					$('#heropointer').hide();	
+					$('#heropoint').hide();	
 					$('#backbutton').hide();
 					$('#hp_bar').hide();
 					$('#endpage').hide();
