@@ -1,222 +1,24 @@
 <!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>生命游戏</title>
+		<link rel="stylesheet" type="text/css" href="lifegame.css">
+	</head>	
+	<body>
 
-	<html>
-		<head>
-			<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-			<title>楼昀恺的主页</title>
-			<style type="text/css">
-				*{
-					margin: 0px;
-					border: 0px;
-					padding: 0px;
-				}
-
-				body{
-					background: -webkit-linear-gradient(left,rgba(193,210,240,0),rgba(193,210,240,1));
-					background: -o-linear-gradient(left,rgba(193,210,240,0),rgba(193,210,240,1));
-					background: -moz-linear-gradient(left,rgba(193,210,240,0),rgba(193,210,240,1));
-					background: linear-gradient(to left, rgba(193,210,240,0),rgba(193,210,240,1));
-				}
-
-				div{
-					border-style: outset;
-				}
-
-				ul { 
-					margin:0; 
-					padding:10px; 
-					list-style:none;  
-					zoom:1;/* ie */ 
-				}
-
-				.intro{
-					position: absolute;
-					width: 100px;
-					padding-right: 50px;
-					bottom: 0px;
-					right: 10px;
-				} 
-
-				.bg{
-					background-image: url("bg.jpg");
-					background-repeat: no-repeat;
-					height: 200px;
-				}
-
-				.list{
-					height: 200px;
-					width: 100%
-				}
-
-				#menu-li{
-					float: left;
-					width: 33%;
-				}
-
-				.new{
-					margin: 0px;
-					padding: 0px;				
-				}
-
-				.title-newlog{
-					text-align: center;
-				}
-
-				.new_1{
-					margin-left: 250px;
-					padding-left: 50px;
-					margin-right: 250px;
-					padding-right: 50px;
-					border-right: 3px outset;
-					border-top: 3px outset;
-					border-left: 3px outset;
-					border-bottom: 3px outset;				
-					background:#eff7ff;
-				}
-
-				#newlog-list{
-					list-style: none;
-				}
-
-				.log{
-					border-bottom: 2px dashed;
-				}
-
-				.homework{
-					border-bottom: 2px dashed;
-				}
-
-				.newlog{
-					border-bottom: 2px dashed;
-				}
-
-				#style1{
-					font-family: STXinwei;
-					font-size: 20px;
-				}
-
-				#style2{
-					font-family: FZShuTi;
-					font-size: 18px;
-					color: black;
-				}
-				
-				#style3{
-					font-family: KaiTi;
-					font-size: 30px;
-				}
-
-				#style4{
-					font-family: KaiTi;
-					font-size: 25px;
-					font-weight: bold;
-				}
-
-				#style5{
-					font-family: KaiTi;
-					font-size: 21px;	
-					overflow:hidden;
-					white-space:nowrap;
-					text-overflow:ellipsis;
-					-o-text-overflow:ellipsis;
-				}
-
-				#style6{
-					font-family: FZShuTi;
-					font-style: italic;
-					color: gray;
-					font-size: 20px;
-					text-decoration: none;
-				}
-
-				#style7{
-					font-family: FZShuTi;
-					font-style: italic;
-					color: black;
-					font-size: 18px;
-					text-decoration: none;
-				}
-
-				ul li a:hover{
-					background: #999;
-				}
-
-				ul li a h6:hover{
-					background: #999;
-				}
-
-				ul li a p:hover{
-					background: #999;
-				}
-
-			</style>
-		</head>	
-		<body>
-			<div class="intro">
-				<div class="intro_back">
-					<img src="headpic.jpg" style="width=100px">
-				</div>
-				<div class="intro-name">
-					<ul>
-						<li><h6 id="style1">楼昀恺</h6></li>
-						<li><h6 id="style2">2014013407</h6></li>
-						<li><h6 id="style2">louyk14@163.com</h6></li>
-					</ul>
-				</div>
-			</div>
-			<div class="bg" id="bg">	
-				<img src="bg.jpg" onload='this.width=screen.width;'>
-				<!--<img style="position:absolute; top:8px;left:6px;z-index:2" src="headpic.jpg" height=200 width=260>-->
-				
-			</div>
-			<div class = "list">
-				<ul id="menu">
-					<li id="menu-li">
-						<div class="homework">
-							<h4 id="style1"><br>关于我</h4>
-							<ul>
-								<li><h6 id="style2">&nbsp;&nbsp;&nbsp;楼昀恺</h6></li>
-								<li><h6 id="style2">&nbsp;&nbsp;&nbsp;代码狗</h6></li>
-								<li><h6 id="style2">&nbsp;&nbsp;&nbsp;美工渣</h6></li>
-								<li><h6 id="style2">&nbsp;&nbsp;&nbsp;没什么爱好</h6></li>
-							</ul>
-						</div>
-					</li>
-					<li id="menu-li">
-						<div class="log">
-							<h4 id="style1"><br>日志</h4>
-							<ul>
-								<li><a  id="style2" href="https://louyk14.github.io/log1.html"><p>第一篇日志</p></a></li>
-								<li><h6 id="style2">&nbsp;</h6></li>
-								<li><h6 id="style2">&nbsp;</h6></li>
-								<li><a  id="style7" href="https://louyk14.github.io/loglist.html"><p>所有日志</p></a></li>
-							</ul>
-						</div>
-					</li>
-					<li id="menu-li">
-						<div class="newlog">
-							<h4 id="style1"><br>作业</h4>
-							<ul>
-								<li><a id="style2" href="https://louyk14.github.io"><p>第一次作业链接</p></a></li>
-								<li><a id="style2" href="https://louyk14.github.io/wechatwall"><p>微信墙链接</p></a></li>
-								<li><a id="style2" href="https://louyk14.github.io/game.html"><p>网页游戏链接</p></a></li>
-								<li><a id="style7" href="https://louyk14.github.io/homeworklist.html"><p>所有作业</p></a></li>
-							</ul>
-						</div>
-					</li>
-				</ul>
-			</div>
-			<div class="new">
-				<h2 class="title-newlog" id="style3">新日志</h2>
-				<ul id="newlog-list">
-					<li>
-						<div class="new_1">
-							<p id="style4">第一篇日志</p>
-							<p id="style5">&nbsp;&nbsp;我一直觉得前端的编程相对于其它编程而言更加直观，这种直观不仅体现在网页有其GUI，也体现在其成果更容易被更多人看到。学习前端方面的知识可以为表达自己的观点、展示自己的作品提供一个更加方便快捷的方式，希望能通过这次课程，让我有一定的前端编程能力，说不定以后就用上了。。。</p>
-							<a id="style6" href="https://louyk14.github.io/log1.html"><h6 id="style2"><br><br>查看详情--></a>
-						</div>
-					</li>
-				</ul>
-			</div>
-		</body>
-	</html>
+	</body>
+	<div id="settings">
+		<span>地图尺寸：</span>	
+		<br>
+		<input type="text" value="" id="size">
+		<br>
+		<span>初始活细胞数量：</span>
+		<br>
+		<input type="text" value="" id="livenum">
+		<br>
+		<input type="button" value="确认" id="submit">
+		<input type="button" value="暂停" id="pause">
+	</div>
+	<script src='lifegame.js'></script>
+</html>
